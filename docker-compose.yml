@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: rolestream-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: rolestream
+      POSTGRES_PASSWORD: rolestream_dev
+      POSTGRES_DB: rolestream
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./schema:/docker-entrypoint-initdb.d
+
+volumes:
+  postgres_data:
