@@ -2,7 +2,9 @@
 
 import requests
 import hashlib
+import html
 import psycopg2
+from bs4 import BeautifulSoup
 from datetime import datetime, timezone
 
 DB_CONFIG = {
@@ -19,12 +21,17 @@ COMPANIES = [
     # add more board tokens here as you build your curated list
 ]
 
-
 def make_id(source: str, source_id: str) -> str:
     """Generate a stable internal ID from source + source_id."""
     raw = f"{source}:{source_id}"
     return hashlib.sha256(raw.encode()).hexdigest()
 
+def strip_html(raw_html: str) -> str:
+    if not raw_html:
+        return ""
+    unescaped = html.unescape(raw_html)
+    cleaned = BeautifulSoup(unescaped, "html.parser").get_text(separator=" ", strip=True)
+    return cleaned
 
 def fetch_greenhouse_jobs(board_token: str) -> list[dict]:
     url = f"https://boards-api.greenhouse.io/v1/boards/{board_token}/jobs"
@@ -47,7 +54,7 @@ def normalize_greenhouse_job(job: dict, company: str) -> dict:
         "title": job["title"],
         "department": department,
         "location": job.get("location", {}).get("name"),
-        "description": job.get("content", ""),
+        "description": strip_html(job.get("content", "")),
         "salary_min": None,
         "salary_max": None,
         "employment_type": None,
