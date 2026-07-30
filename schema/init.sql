@@ -30,3 +30,4 @@ CREATE INDEX IF NOT EXISTS idx_postings_updated_at
     ON postings (updated_at);
 
 ALTER TABLE postings REPLICA IDENTITY FULL;
+ALTER TABLE postings ADD COLUMN content_hash TEXT;
