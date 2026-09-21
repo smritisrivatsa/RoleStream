@@ -17,8 +17,9 @@ DB_CONFIG = {
 # Companies to poll — the slug in their Ashby job board URL
 # (jobs.ashbyhq.com/{slug})
 COMPANIES = [
-    "Ashby",
-    # add more Ashby company slugs here
+    "notion", "ramp", "linear", "perplexity", "vercel",
+    "openai", "mercury", "sarvam", "clickhouse", "modal",
+    "hex", "hightouch"
 ]
 
 
@@ -35,14 +36,23 @@ def strip_html(raw_html: str) -> str:
 
 
 def extract_salary(job: dict) -> tuple:
-    """Ashby supports multiple regional comp tiers; use summaryComponents
-    for one overall min/max across all regions."""
     comp = job.get("compensation") or {}
     summary = comp.get("summaryComponents") or []
     for component in summary:
         if component.get("compensationType") == "Salary":
-            return component.get("minValue"), component.get("maxValue")
-    return None, None
+            min_val = component.get("minValue")
+            max_val = component.get("maxValue")
+            interval = component.get("interval", "")
+            currency = component.get("currencyCode", "USD")
+
+            if "HOUR" in interval.upper():
+                if min_val is not None:
+                    min_val = min_val * 2080
+                if max_val is not None:
+                    max_val = max_val * 2080
+
+            return min_val, max_val, currency
+    return None, None, None
 
 
 def compute_content_hash(posting: dict) -> str:
@@ -68,7 +78,7 @@ def fetch_ashby_jobs(company_slug: str) -> list:
 
 
 def normalize_ashby_job(job: dict, company: str) -> dict:
-    salary_min, salary_max = extract_salary(job)
+    salary_min, salary_max, currency = extract_salary(job)
 
     posted_at = None
     published_at = job.get("publishedAt")
@@ -86,6 +96,7 @@ def normalize_ashby_job(job: dict, company: str) -> dict:
         "description": strip_html(job.get("descriptionHtml", "")),
         "salary_min": salary_min,
         "salary_max": salary_max,
+        "currency": currency,
         "employment_type": job.get("employmentType"),
         "posted_at": posted_at,
         "status": "open",
@@ -102,13 +113,13 @@ def upsert_posting(cursor, posting: dict):
         """
         INSERT INTO postings (
             id, source, source_id, company, title, department, location,
-            description, salary_min, salary_max, employment_type,
+            description, salary_min, salary_max, currency, employment_type,
             posted_at, updated_at, status, url, content_hash
         )
         VALUES (
             %(id)s, %(source)s, %(source_id)s, %(company)s, %(title)s,
             %(department)s, %(location)s, %(description)s, %(salary_min)s,
-            %(salary_max)s, %(employment_type)s, %(posted_at)s, NOW(),
+            %(salary_max)s, %(currency)s, %(employment_type)s, %(posted_at)s, NOW(),
             %(status)s, %(url)s, %(content_hash)s
         )
         ON CONFLICT (source, source_id) DO UPDATE SET
@@ -118,6 +129,7 @@ def upsert_posting(cursor, posting: dict):
             description = EXCLUDED.description,
             salary_min = EXCLUDED.salary_min,
             salary_max = EXCLUDED.salary_max,
+            currency = EXCLUDED.currency,
             employment_type = EXCLUDED.employment_type,
             updated_at = NOW(),
             status = EXCLUDED.status,
@@ -127,7 +139,6 @@ def upsert_posting(cursor, posting: dict):
         """,
         posting,
     )
-
 
 def run():
     conn = psycopg2.connect(**DB_CONFIG)
