@@ -17,8 +17,9 @@ DB_CONFIG = {
 
 # Companies to poll — board_token is the slug in their Greenhouse URL
 COMPANIES = [
-    "stripe",
-    # add more board tokens here as you build your curated list
+    "stripe", "airbnb", "pinterest", "robinhood", "coinbase",
+    "databricks", "anthropic", "twitch", "figma", "brex",
+    "asana", "gitlab", "cloudflare", "discord",
 ]
 
 def make_id(source: str, source_id: str) -> str:
@@ -29,9 +30,13 @@ def make_id(source: str, source_id: str) -> str:
 def strip_html(raw_html: str) -> str:
     if not raw_html:
         return ""
-    unescaped = html.unescape(raw_html)
-    cleaned = BeautifulSoup(unescaped, "html.parser").get_text(separator=" ", strip=True)
-    return cleaned
+    unescaped = raw_html
+    for _ in range(3):
+        new_unescaped = html.unescape(unescaped)
+        if new_unescaped == unescaped:
+            break
+        unescaped = new_unescaped
+    return BeautifulSoup(unescaped, "html.parser").get_text(separator=" ", strip=True)
 
 def fetch_greenhouse_jobs(board_token: str) -> list[dict]:
     url = f"https://boards-api.greenhouse.io/v1/boards/{board_token}/jobs"

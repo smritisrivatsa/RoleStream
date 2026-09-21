@@ -31,3 +31,4 @@ CREATE INDEX IF NOT EXISTS idx_postings_updated_at
 
 ALTER TABLE postings REPLICA IDENTITY FULL;
 ALTER TABLE postings ADD COLUMN content_hash TEXT;
+ALTER TABLE postings ADD COLUMN currency TEXT;
