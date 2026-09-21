@@ -12,7 +12,8 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./schema:/docker-entrypoint-initdb.d
-  
+    command: ["postgres", "-c", "wal_level=logical"]
+
   kafka:
     image: confluentinc/cp-kafka:7.6.0
     container_name: rolestream-kafka
@@ -32,6 +33,22 @@ services:
       CLUSTER_ID: vYzVa7CORS6IOJlLSW02_w
     volumes:
       - kafka_data:/var/lib/kafka/data
+
+  debezium:
+    image: quay.io/debezium/connect:latest
+    container_name: rolestream-debezium
+    restart: unless-stopped
+    depends_on:
+      - postgres
+      - kafka
+    ports:
+      - "8083:8083"
+    environment:
+      BOOTSTRAP_SERVERS: kafka:29092
+      GROUP_ID: rolestream-connect
+      CONFIG_STORAGE_TOPIC: connect_configs
+      OFFSET_STORAGE_TOPIC: connect_offsets
+      STATUS_STORAGE_TOPIC: connect_status
 
 volumes:
   postgres_data:
