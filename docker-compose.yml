@@ -50,6 +50,17 @@ services:
       OFFSET_STORAGE_TOPIC: connect_offsets
       STATUS_STORAGE_TOPIC: connect_status
 
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: rolestream-qdrant
+    restart: unless-stopped
+    ports:
+      - "6333:6333"
+      - "6334:6334"
+    volumes:
+      - qdrant_data:/qdrant/storage
+
 volumes:
   postgres_data:
   kafka_data:
+  qdrant_data:
