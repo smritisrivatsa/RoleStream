@@ -32,7 +32,7 @@ def strip_html(raw_html: str) -> str:
     """Ashby's descriptionHtml is genuine, single-encoded HTML."""
     if not raw_html:
         return ""
-    return BeautifulSoup(raw_html, "html.parser").get_text(separator=" ", strip=True)
+    return BeautifulSoup(raw_html, "html.parser").get_text(separator="\n", strip=True)
 
 
 def extract_salary(job: dict) -> tuple:
@@ -72,7 +72,7 @@ def compute_content_hash(posting: dict) -> str:
 def fetch_ashby_jobs(company_slug: str) -> list:
     url = f"https://api.ashbyhq.com/posting-api/job-board/{company_slug}"
     params = {"includeCompensation": "true"}
-    response = requests.get(url, params=params, timeout=15)
+    response = requests.get(url, params=params, timeout=30)
     response.raise_for_status()
     return response.json().get("jobs", [])
 
@@ -147,7 +147,12 @@ def run():
 
     for company_slug in COMPANIES:
         print(f"Polling Ashby: {company_slug}")
-        jobs = fetch_ashby_jobs(company_slug)
+        try:
+            jobs = fetch_ashby_jobs(company_slug)
+        except requests.exceptions.RequestException as e:
+            print(f"  -> FAILED to fetch {company_slug}: {e}")
+            continue
+
         for job in jobs:
             posting = normalize_ashby_job(job, company=company_slug)
             upsert_posting(cursor, posting)

@@ -1,0 +1,14 @@
+{
+    "connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+    "database.user": "rolestream",
+    "database.dbname": "rolestream",
+    "topic.prefix": "rolestream",
+    "database.hostname": "postgres",
+    "database.password": "REPLACE_ME",
+    "table.include.list": "public.postings",
+    "database.port": "5432",
+    "plugin.name": "pgoutput",
+    "decimal.handling.mode": "double",
+    "key.converter.schemas.enable": "false",
+    "value.converter.schemas.enable": "false"
+}

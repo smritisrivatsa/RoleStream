@@ -36,12 +36,12 @@ def strip_html(raw_html: str) -> str:
         if new_unescaped == unescaped:
             break
         unescaped = new_unescaped
-    return BeautifulSoup(unescaped, "html.parser").get_text(separator=" ", strip=True)
+    return BeautifulSoup(unescaped, "html.parser").get_text(separator="\n", strip=True)
 
 def fetch_greenhouse_jobs(board_token: str) -> list[dict]:
     url = f"https://boards-api.greenhouse.io/v1/boards/{board_token}/jobs"
     params = {"content": "true"}  # needed to get full description text
-    response = requests.get(url, params=params, timeout=15)
+    response = requests.get(url, params=params, timeout=30)
     response.raise_for_status()
     return response.json().get("jobs", [])
 
@@ -106,7 +106,11 @@ def run():
 
     for board_token in COMPANIES:
         print(f"Polling Greenhouse: {board_token}")
-        jobs = fetch_greenhouse_jobs(board_token)
+        try:
+            jobs = fetch_greenhouse_jobs(board_token)
+        except requests.exceptions.RequestException as e:
+            print(f"  -> FAILED to fetch {board_token}: {e}")
+            continue
         for job in jobs:
             posting = normalize_greenhouse_job(job, company=board_token.capitalize())
             upsert_posting(cursor, posting)
