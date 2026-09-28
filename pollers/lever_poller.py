@@ -35,7 +35,7 @@ def strip_html(raw_html: str) -> str:
         if new_unescaped == unescaped:
             break
         unescaped = new_unescaped
-    return BeautifulSoup(unescaped, "html.parser").get_text(separator=" ", strip=True)
+    return BeautifulSoup(unescaped, "html.parser").get_text(separator="\n", strip=True)
 
 
 def extract_lever_description(job: dict) -> str:
@@ -56,7 +56,7 @@ def extract_lever_description(job: dict) -> str:
         if content:
             parts.append(content)
 
-    return " ".join(parts)
+    return "\n".join(parts)
 
 
 def parse_salary_range(salary_text):
@@ -74,7 +74,7 @@ def parse_salary_range(salary_text):
 def fetch_lever_jobs(company_slug: str) -> list:
     url = f"https://api.lever.co/v0/postings/{company_slug}"
     params = {"mode": "json"}
-    response = requests.get(url, params=params, timeout=15)
+    response = requests.get(url, params=params, timeout=30)
     response.raise_for_status()
     return response.json()
 
@@ -154,7 +154,7 @@ def run():
         print(f"Polling Lever: {company_slug}")
         try:
             jobs = fetch_lever_jobs(company_slug)
-        except requests.exceptions.HTTPError as e:
+        except requests.exceptions.RequestException as e:
             print(f"  -> FAILED to fetch {company_slug}: {e}")
             continue
 
