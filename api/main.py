@@ -26,18 +26,44 @@ class Query(BaseModel):
     company: str | None = None
 
 
-def embed(text: str) -> list[float]:
+def embed(text: str) -> tuple[list[float], dict]:
     r = requests.post(EMBED_URL, json={"texts": [text]}, timeout=60)
     r.raise_for_status()
-    return r.json()["embeddings"][0]
+    data = r.json()
+    return data["embeddings"][0], data["sparse_embeddings"][0]
 
 
-def search(vector: list[float], k: int, company: str | None) -> list[dict]:
+def search(dense_vector: list[float], sparse_vector: dict, k: int, company: str | None) -> list[dict]:
     # Retrieve more than k so we have room to dedupe by posting
     raw_limit = k * 3
-    body = {"query": vector, "limit": raw_limit, "with_payload": True}
+
+    query_filter = None
     if company:
-        body["filter"] = {"must": [{"key": "company", "match": {"value": company}}]}
+        query_filter = {"must": [{"key": "company", "match": {"value": company}}]}
+
+    body = {
+        "prefetch": [
+            {
+                "query": dense_vector,
+                "using": "dense",
+                "limit": raw_limit,
+            },
+            {
+                "query": {
+                    "indices": sparse_vector["indices"],
+                    "values": sparse_vector["values"],
+                },
+                "using": "sparse",
+                "limit": raw_limit,
+            },
+        ],
+        "query": {"fusion": "rrf"},
+        "limit": raw_limit,
+        "with_payload": True,
+    }
+    if query_filter:
+        body["filter"] = query_filter
+
     r = requests.post(
         f"{QDRANT_URL}/collections/{COLLECTION}/points/query", json=body, timeout=30
     )
@@ -52,7 +78,14 @@ def search(vector: list[float], k: int, company: str | None) -> list[dict]:
             seen[pid] = h
 
     deduped = sorted(seen.values(), key=lambda h: h["score"], reverse=True)
-    return deduped[:k]
+
+    # Drop weak matches entirely rather than passing them to the LLM —
+    # low RRF scores tend to be coincidental keyword overlaps (e.g. "Go"
+    # matching "Go-To-Market") rather than genuinely relevant chunks.
+    MIN_SCORE = 0.2
+    filtered = [h for h in deduped if h["score"] >= MIN_SCORE]
+
+    return filtered[:k]
 
 
 def generate(question: str, hits: list[dict]) -> str:
@@ -78,7 +111,8 @@ def generate(question: str, hits: list[dict]) -> str:
 @app.post("/query")
 def query(q: Query):
     try:
-        hits = search(embed(q.question), q.top_k, q.company)
+        dense_vec, sparse_vec = embed(q.question)
+        hits = search(dense_vec, sparse_vec, q.top_k, q.company)
         if not hits:
             return {"answer": "No matching postings found.", "sources": []}
         answer = generate(q.question, hits)

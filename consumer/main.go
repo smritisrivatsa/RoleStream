@@ -100,17 +100,24 @@ func doJSON(method, url string, body, out any) error {
 	return nil
 }
 
-func embed(texts []string) ([][]float32, error) {
+type sparseVector struct {
+	Indices []int     `json:"indices"`
+	Values  []float32 `json:"values"`
+}
+
+func embed(texts []string) ([][]float32, []sparseVector, error) {
 	var out struct {
-		Embeddings [][]float32 `json:"embeddings"`
+		Embeddings       [][]float32    `json:"embeddings"`
+		SparseEmbeddings []sparseVector `json:"sparse_embeddings"`
 	}
 	if err := doJSON(http.MethodPost, embedURL, map[string]any{"texts": texts}, &out); err != nil {
-		return nil, err
+		return nil, nil, err
 	}
-	if len(out.Embeddings) != len(texts) {
-		return nil, fmt.Errorf("got %d embeddings for %d texts", len(out.Embeddings), len(texts))
+	if len(out.Embeddings) != len(texts) || len(out.SparseEmbeddings) != len(texts) {
+		return nil, nil, fmt.Errorf("got %d dense / %d sparse embeddings for %d texts",
+			len(out.Embeddings), len(out.SparseEmbeddings), len(texts))
 	}
-	return out.Embeddings, nil
+	return out.Embeddings, out.SparseEmbeddings, nil
 }
 
 // deleteChunks removes a posting's points. If keep > 0, only chunks with index >= keep
@@ -133,15 +140,21 @@ func upsert(p *posting) error {
 	for i, c := range chunks {
 		texts[i] = c.Text
 	}
-	vecs, err := embed(texts)
+	denseVecs, sparseVecs, err := embed(texts)
 	if err != nil {
 		return err
 	}
 	points := make([]map[string]any, len(chunks))
 	for i, c := range chunks {
 		points[i] = map[string]any{
-			"id":     pointID(p.ID, c.Index),
-			"vector": vecs[i],
+			"id": pointID(p.ID, c.Index),
+			"vector": map[string]any{
+				"dense": denseVecs[i],
+				"sparse": map[string]any{
+					"indices": sparseVecs[i].Indices,
+					"values":  sparseVecs[i].Values,
+				},
+			},
 			"payload": map[string]any{
 				"posting_id": p.ID, "chunk_index": c.Index, "section": c.Section, "text": c.Text,
 				"company": p.Company, "title": p.Title, "location": str(p.Location),

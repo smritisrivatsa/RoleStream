@@ -22,6 +22,23 @@ COMPANIES = [
     "hex", "hightouch"
 ]
 
+# Proper display names for Ashby's lowercase slugs — .capitalize() alone
+# would get compound names like "OpenAI" and "ClickHouse" wrong.
+COMPANY_DISPLAY_NAMES = {
+    "notion": "Notion",
+    "ramp": "Ramp",
+    "linear": "Linear",
+    "perplexity": "Perplexity",
+    "vercel": "Vercel",
+    "openai": "OpenAI",
+    "mercury": "Mercury",
+    "sarvam": "Sarvam",
+    "clickhouse": "ClickHouse",
+    "modal": "Modal",
+    "hex": "Hex",
+    "hightouch": "Hightouch",
+}
+
 
 def make_id(source: str, source_id: str) -> str:
     raw = f"{source}:{source_id}"
@@ -153,8 +170,9 @@ def run():
             print(f"  -> FAILED to fetch {company_slug}: {e}")
             continue
 
+        display_name = COMPANY_DISPLAY_NAMES.get(company_slug, company_slug.capitalize())
         for job in jobs:
-            posting = normalize_ashby_job(job, company=company_slug)
+            posting = normalize_ashby_job(job, company=display_name)
             upsert_posting(cursor, posting)
         print(f"  -> processed {len(jobs)} postings")
 
