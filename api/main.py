@@ -8,6 +8,24 @@ OLLAMA_URL = "http://localhost:11434/api/chat"
 COLLECTION = "postings"
 MODEL = "llama3.2:3b"
 
+KNOWN_COMPANIES = [
+    "Stripe", "Airbnb", "Pinterest", "Robinhood", "Coinbase", "Databricks",
+    "Anthropic", "Twitch", "Figma", "Brex", "Asana", "Gitlab", "Cloudflare",
+    "Discord", "Spotify", "Anchorage", "Ro", "Plaid", "Notion", "Ramp",
+    "Linear", "Perplexity", "Vercel", "OpenAI", "Mercury", "Sarvam",
+    "ClickHouse", "Modal", "Hex", "Hightouch",
+]
+
+def extract_company(question: str) -> str | None:
+    """check if any known company name appears in the question, so we can
+    auto-scope the search filter without the user needing to pass it explicitly."""
+    question_lower = question.lower()
+    # Sort by length descending so longer/more specific names match first
+    for company in sorted(KNOWN_COMPANIES, key=len, reverse=True):
+        if company.lower() in question_lower:
+            return company
+    return None
+
 SYSTEM = (
     "You answer questions about job postings using ONLY the numbered context "
     "chunks provided. Always respond in at least one complete sentence. "
@@ -111,8 +129,9 @@ def generate(question: str, hits: list[dict]) -> str:
 @app.post("/query")
 def query(q: Query):
     try:
+        company = q.company or extract_company(q.question)
         dense_vec, sparse_vec = embed(q.question)
-        hits = search(dense_vec, sparse_vec, q.top_k, q.company)
+        hits = search(dense_vec, sparse_vec, q.top_k, company)
         if not hits:
             return {"answer": "No matching postings found.", "sources": []}
         answer = generate(q.question, hits)

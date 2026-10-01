@@ -1,0 +1,2594 @@
+[
+  {
+    "question": "Which roles mention Go experience?",
+    "result": {
+      "answer": "The roles that mention Go experience are the Senior Backend Engineer (Go) role at Gitlab [2] and the Go-To-Market (GTM) Digital Natives Program Leader role at Databricks [4].",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Databricks",
+          "title": "AMER Energy Industry Go-To-Market (GTM) Leader",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8675320002",
+          "section": "Pay Range Transparency",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Gitlab",
+          "title": "Senior Backend Engineer (Go), Tenant Scale: Gitaly ",
+          "url": "https://job-boards.greenhouse.io/gitlab/jobs/8749951002",
+          "section": "What you\u2019ll bring",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Ramp",
+          "title": "Product Operations Specialist | Travel",
+          "url": "https://jobs.ashbyhq.com/ramp/925fce22-61af-4d26-8f20-90696a3b6704",
+          "section": "Nice to Haves",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Databricks",
+          "title": "Go-To-Market (GTM) Digital Natives Program Leader",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8356420002",
+          "section": "Pay Range Transparency",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Databricks",
+          "title": "Sr. Recruiter, GTM Field Engineering",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8771706002",
+          "section": "The impact you will have",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Are there any postings requiring Kubernetes?",
+    "result": {
+      "answer": "Yes, there are two postings that require Kubernetes: one from Anthropic for a Staff+ Software Engineer, Kubernetes Platform, and another one from Anthropic for a Staff Software Engineer, Kubernetes Platform, both with a location in San Francisco, CA.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Anthropic",
+          "title": " Research Engineer / Research Scientist, Tokens",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/4951814008",
+          "section": "About Anthropic",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Anthropic",
+          "title": "Staff+ Software Engineer, Kubernetes Platform",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5211241008",
+          "section": "Key responsibilities",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Discord",
+          "title": "Senior Software Engineer, Consumer Revenue",
+          "url": "https://job-boards.greenhouse.io/discord/jobs/8460791002",
+          "section": "What you should have",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Anthropic",
+          "title": "Staff Software Engineer, Kubernetes Platform",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5211305008",
+          "section": "Key responsibilities",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Gitlab",
+          "title": "Staff Backend Engineer, Developer Experience",
+          "url": "https://job-boards.greenhouse.io/gitlab/jobs/8490477002",
+          "section": "What You'll Do",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which companies are hiring for Rust developers?",
+    "result": {
+      "answer": "Cloudflare is hiring for two positions that involve Rust developers: Senior Software Engineer - Egress (Go/Rust) [3] and Senior Software Engineer - Network Connectivity (Go/Rust) [5].",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Cloudflare",
+          "title": "Software Engineer - Egress (Go/Rust)",
+          "url": "https://boards.greenhouse.io/cloudflare/jobs/8195746?gh_jid=8195746",
+          "section": "About Us",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "OpenAI",
+          "title": "Firmware Engineer, Robotics",
+          "url": "https://jobs.ashbyhq.com/openai/3f99bfef-5b1a-48ea-aed0-2dbd57b12722",
+          "section": "Nice to have",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Cloudflare",
+          "title": "Senior Software Engineer - Egress (Go/Rust)",
+          "url": "https://boards.greenhouse.io/cloudflare/jobs/7463793?gh_jid=7463793",
+          "section": "About Us",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "OpenAI",
+          "title": "Training - Runtime Foundations Engineer",
+          "url": "https://jobs.ashbyhq.com/openai/0fc4742f-21f9-40a3-925e-adeb0a6920c1",
+          "section": "Care deeply about performance, correctness, and reliability",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Cloudflare",
+          "title": "Senior Software Engineer - Network Connectivity (Go/Rust)",
+          "url": "https://boards.greenhouse.io/cloudflare/jobs/7793013?gh_jid=7793013",
+          "section": "About Us",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Is there a posting that mentions React specifically?",
+    "result": {
+      "answer": "Yes, the postings at [2] and [3] specifically mention React, with [2] mentioning a new React view for agent traces and [3] mentioning that the engineer should be comfortable enough to touch a modern React app.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Stripe",
+          "title": "Staff Engineer, Support Experiences",
+          "url": "https://stripe.com/jobs/search?gh_jid=8162185",
+          "section": "Preferred qualifications",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "ClickHouse",
+          "title": "Langfuse - Senior Product Engineer",
+          "url": "https://jobs.ashbyhq.com/clickhouse/0087feaa-a275-427d-bf4a-14a508708687",
+          "section": "You will grow at Langfuse by",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "ClickHouse",
+          "title": "Senior Software Engineer - Cloud Partner Integrations",
+          "url": "https://jobs.ashbyhq.com/clickhouse/bdb81a3b-dd72-4785-a908-9fd394025f73",
+          "section": "About you",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Anthropic",
+          "title": "Social Escalations Manager ",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5418858008",
+          "section": "Key responsibilities",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "ClickHouse",
+          "title": "Senior Software Engineer - Cloud Partner Integrations",
+          "url": "https://jobs.ashbyhq.com/clickhouse/0a9ffa59-e779-4836-b475-1536c3f5ede2",
+          "section": "About you",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which roles require SQL experience?",
+    "result": {
+      "answer": "The roles that require SQL experience are the Staff+ Software Engineer, Databases at Anthropic, [1], the Senior Technical Customer Support Engineer, Federal at ClickHouse, [3], and the Member of Data Staff (Analytics Engineer) at Perplexity, [4].",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Anthropic",
+          "title": "Staff+ Software Engineer, Databases",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5301750008",
+          "section": "Preferred Qualifications",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Databricks",
+          "title": "Engineering Manager - Databricks SQL Control Plane",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8472398002",
+          "section": "Pay Range Transparency",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "ClickHouse",
+          "title": "Senior Technical Customer Support Engineer, Federal",
+          "url": "https://jobs.ashbyhq.com/clickhouse/e17a51f3-9b63-4c81-b419-2ea6d3db0211",
+          "section": "What you bring along",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Perplexity",
+          "title": "Member of Data Staff (Analytics Engineer)",
+          "url": "https://jobs.ashbyhq.com/perplexity/fed8d2c4-9c82-43ad-a168-434146c759ff",
+          "section": "What You'll Do",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Databricks",
+          "title": "Senior Software Engineer - Fullstack",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8029679002",
+          "section": "intro",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which companies are hiring for data engineer roles?",
+    "result": {
+      "answer": "None of the provided job postings indicate that companies are hiring for data engineer roles.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Databricks",
+          "title": "Sr. Solutions Architect - Agencies ",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8758645002",
+          "section": "Nice to Have",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Linear",
+          "title": "Technical Recruiter",
+          "url": "https://jobs.ashbyhq.com/linear/fb4b6076-b943-4d95-bb9b-a66aef8275f2",
+          "section": "What you\u2019ll do",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Databricks",
+          "title": "Lakebase Sales Specialist",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8569403002",
+          "section": "intro",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Databricks",
+          "title": "Sr. Solutions Architect - Global Telecommunications ",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8476403002",
+          "section": "Nice to Have",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Databricks",
+          "title": "Solutions Architect - Global Telecommunications ",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8755470002",
+          "section": "Nice to Have",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Compare backend engineering requirements at Stripe and ClickHouse",
+    "result": {
+      "answer": "While both Stripe and ClickHouse require backend engineers to debug production issues across services and multiple levels of the stack, there are some differences in their emphasis and approach. At Stripe, backend engineers are expected to deliver value through a strong collaborative approach with multiple customers and stakeholders, whereas ClickHouse places a strong emphasis on rigorous testing and validation through real data in production, running load tests, and iterating based on those results. Additionally, Stripe's backend engineers are also expected to shape future-proof interfaces that are easy to build with, indicating a greater focus on design and usability.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Stripe",
+          "title": "Backend Engineer, Core Technology",
+          "url": "https://stripe.com/jobs/search?gh_jid=6042172",
+          "section": "Responsibilities",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "ClickHouse",
+          "title": "Langfuse - Senior Backend Engineer",
+          "url": "https://jobs.ashbyhq.com/clickhouse/31500bec-b690-4795-b4d6-0dce06a4c180",
+          "section": "You will grow at Langfuse by",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Stripe",
+          "title": "Full Stack Engineer, Developer & End User Experience Platform",
+          "url": "https://stripe.com/jobs/search?gh_jid=6567104",
+          "section": "Responsibilities",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Stripe",
+          "title": "Pricing Strategist",
+          "url": "https://stripe.com/jobs/search?gh_jid=8187578",
+          "section": "Responsibilities",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Stripe",
+          "title": "Software Engineer, Billing Platform",
+          "url": "https://stripe.com/jobs/search?gh_jid=8127182",
+          "section": "Responsibilities",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which companies have open roles in the AI/ML space?",
+    "result": {
+      "answer": "The context provides information about three companies that have open roles in the AI/ML space: Databricks, OpenAI (both with the Applied AI Architect, Large Enterprise role), and Anthropic (with the Research Engineer, Pretraining Scaling role).",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Databricks",
+          "title": "Lead Solutions Architect - Generative AI (EMEA Emerging DNB)",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8403943002",
+          "section": "Nice to Have",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "OpenAI",
+          "title": "Applied AI Architect, Large Enterprise",
+          "url": "https://jobs.ashbyhq.com/openai/c00094f9-e071-4870-afec-104beb3ce499",
+          "section": "About the Team",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "OpenAI",
+          "title": "Applied AI Architect, Large Enterprise",
+          "url": "https://jobs.ashbyhq.com/openai/557dd2ec-db6c-49b1-a0aa-193007ebd5b6",
+          "section": "About the Team",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Anthropic",
+          "title": "Research Engineer, Pretraining Scaling",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/4938432008",
+          "section": "Responsibilities",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Anthropic",
+          "title": "Research Engineer, Pretraining Scaling - London",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/4938436008",
+          "section": "Responsibilities",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "What's the salary range for engineering roles at OpenAI?",
+    "result": {
+      "answer": "There is no mention of OpenAI in the provided context. The context only mentions Anthropic, a company that appears to be hiring for various engineering roles, but it does not explicitly state the company name as OpenAI.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Anthropic",
+          "title": "Data Engineer, GTM",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5418610008",
+          "section": "Responsibilities",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Anthropic",
+          "title": "Staff+ Software Engineer, Infrastructure (Distributed Systems)",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/4970314008",
+          "section": "Preferred qualifications",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Anthropic",
+          "title": "Software Engineer, Labs",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5017202008",
+          "section": "Responsibilities",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Anthropic",
+          "title": "[DH] Engineering Manager, AI Observability",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5429202008",
+          "section": "Responsibilities",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Anthropic",
+          "title": "Staff Software Engineer, Infrastructure (Distributed Systems)",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5387083008",
+          "section": "Preferred qualifications",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which companies pay over $200k for senior roles?",
+    "result": {
+      "answer": "According to the provided context, Databricks pays over $200k for a Senior Solutions Architect (EDW Enterprise Data Warehouse Migrations) role with an annual salary range of \u20ac112.700 \u2014 \u20ac140.325 EUR, which is approximately $127,200 \u2014 $156,400 USD [2]. Additionally, Anthropic pays over $200k for the following senior roles: Strategic Account Executive, GSI, with an annual compensation range of $380,000 \u2014 $450,000 USD [4], and Senior Partner Account Manager \u2013Global Systems Integrator Alliances with an annual compensation range of $300,000 \u2014 $365,000 USD [5].",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Anthropic",
+          "title": "Global Senior Equity Program Manager",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5162711008",
+          "section": "Responsibilities",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Databricks",
+          "title": "Senior Solutions Architect (EDW Enterprise Data Warehouse Migrations)",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8720254002",
+          "section": "Pay Range Transparency",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Databricks",
+          "title": "Senior Customer Enablement Program Manager",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8535311002",
+          "section": "Pay Range Transparency",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Anthropic",
+          "title": "Strategic Account Executive, GSI ",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5176036008",
+          "section": "Responsibilities",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Anthropic",
+          "title": "Senior Partner Account Manager \u2013Global Systems Integrator Alliances",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5082402008",
+          "section": "Preferred qualifications",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Is there a 'Chief Vibes Officer' role posted anywhere?",
+    "result": {
+      "answer": "No, there is no 'Chief Vibes Officer' role posted anywhere.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Figma",
+          "title": "Executive Assistant, Chief People Officer",
+          "url": "https://boards.greenhouse.io/figma/jobs/6132356004?gh_jid=6132356004",
+          "section": "What you'll do at Figma",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Cloudflare",
+          "title": "Chief of Staff to Chief Strategy Officer",
+          "url": "https://boards.greenhouse.io/cloudflare/jobs/8076815?gh_jid=8076815",
+          "section": "About the Role",
+          "score": 0.333
+        },
+        {
+          "ref": 3,
+          "company": "Gitlab",
+          "title": "Manager, Procurement",
+          "url": "https://job-boards.greenhouse.io/gitlab/jobs/8642786002",
+          "section": "intro",
+          "score": 0.25
+        },
+        {
+          "ref": 4,
+          "company": "Figma",
+          "title": "Executive Assistant, People",
+          "url": "https://boards.greenhouse.io/figma/jobs/5969046004?gh_jid=5969046004",
+          "section": "What you'll do at Figma",
+          "score": 0.25
+        },
+        {
+          "ref": 5,
+          "company": "Coinbase",
+          "title": "Deputy Chief Regulatory Officer",
+          "url": "https://www.coinbase.com/careers/positions/8001778?gh_jid=8001778",
+          "section": "learn more about working at Coinbase",
+          "score": 0.2
+        }
+      ]
+    }
+  },
+  {
+    "question": "Are there any postings for COBOL developers?",
+    "result": {
+      "answer": "There are no postings for COBOL developers listed in the provided context chunks.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Cloudflare",
+          "title": "VoidZero Developer Relations Engineer",
+          "url": "https://boards.greenhouse.io/cloudflare/jobs/8190563?gh_jid=8190563",
+          "section": "About the Role",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Discord",
+          "title": "Senior Software Engineer, Consumer Revenue",
+          "url": "https://job-boards.greenhouse.io/discord/jobs/8460791002",
+          "section": "What you should have",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Anthropic",
+          "title": "Staff+ Software Engineer, Claude Managed Agents",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5395767008",
+          "section": "What you'll do",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Discord",
+          "title": "Senior Software Engineer - Safety Experience",
+          "url": "https://job-boards.greenhouse.io/discord/jobs/8817776002",
+          "section": "What you should have",
+          "score": 0.25
+        },
+        {
+          "ref": 5,
+          "company": "Anthropic",
+          "title": " Research Engineer / Research Scientist, Tokens",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/4951814008",
+          "section": "About Anthropic",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which companies posted new roles in the last week?",
+    "result": {
+      "answer": "I couldn't determine which companies posted new roles in the last week based on the provided context.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Anthropic",
+          "title": "Head of Technical Training",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5415529008",
+          "section": "Minimum qualifications",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Brex",
+          "title": "Director, Organic Growth & Discoverability",
+          "url": "https://www.brex.com/careers/8522919002?gh_jid=8522919002",
+          "section": "What you\u2019ll do",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Anthropic",
+          "title": "Software Engineering Manager, Network Security",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5098092008",
+          "section": "Minimum Requirements",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Brex",
+          "title": "Staff Product Designer",
+          "url": "https://www.brex.com/careers/8777938002?gh_jid=8777938002",
+          "section": "Requirements",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Brex",
+          "title": "Director, Organic Growth & Discoverability",
+          "url": "https://www.brex.com/careers/8522876002?gh_jid=8522876002",
+          "section": "What you\u2019ll do",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Has any Anthropic posting changed recently?",
+    "result": {
+      "answer": "According to context chunk [2], it appears that Anthropic postings, including the one for Executive Communications Writer, have been recently updated with new information about representation, safety, and vetted recruiting agencies.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Anthropic",
+          "title": "Director, US International Tax Planning",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5387009008",
+          "section": "About the role",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Anthropic",
+          "title": "Executive Communications Writer",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5415287008",
+          "section": "Minimum years of experience",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Anthropic",
+          "title": "Head of Global Renewals",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5237923008",
+          "section": "Minimum years of experience",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Anthropic",
+          "title": "Sales Strategy, Operational Excellence",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5414793008",
+          "section": "Key responsibilities",
+          "score": 0.25
+        },
+        {
+          "ref": 5,
+          "company": "Anthropic",
+          "title": "Anthropic Fellows Program, The Anthropic Institute (Economics & Policy)",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5183053008",
+          "section": "Minimum years of experience",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "What's the most recently posted role at Stripe?",
+    "result": {
+      "answer": "There isn't enough information to determine the most recently posted role at Stripe, as the context only provides a snapshot of the available job postings and does not specify which one was posted most recently.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Stripe",
+          "title": "Head of AEO & SEO",
+          "url": "https://stripe.com/jobs/search?gh_jid=8128634",
+          "section": "What you\u2019ll do",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Stripe",
+          "title": "Engagement Manager, Professional Services",
+          "url": "https://stripe.com/jobs/search?gh_jid=8209649",
+          "section": "Responsibilities",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Stripe",
+          "title": "Contracting Operations Specialist",
+          "url": "https://stripe.com/jobs/search?gh_jid=7994945",
+          "section": "Responsibilities",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Stripe",
+          "title": "Senior Staff Product Designer, Risk",
+          "url": "https://stripe.com/jobs/search?gh_jid=8031782",
+          "section": "About the team",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Stripe",
+          "title": "Product Strategy & Operations - Global Product",
+          "url": "https://stripe.com/jobs/search?gh_jid=8177640",
+          "section": "About the team",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "What departments at OpenAI currently have open roles?",
+    "result": {
+      "answer": "The current open roles are in the following departments: OpenAI | Recruiting Coordinator - Contract [1], OpenAI | Strategic Delivery Lead, Cyber [2], OpenAI | Applied AI Architect, Education [3], OpenAI | Member of Executive Operations [4], and OpenAI | Research Scientist [5].",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "OpenAI",
+          "title": "Recruiting Coordinator - Contract",
+          "url": "https://jobs.ashbyhq.com/openai/dbd5ae8a-7c01-4f17-be39-b8caa8fd95d5",
+          "section": "In this role, you will",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "OpenAI",
+          "title": "Strategic Delivery Lead, Cyber",
+          "url": "https://jobs.ashbyhq.com/openai/125db0ea-d5e1-4c49-bc1a-e6ffc8ea71ff",
+          "section": "In this role, you will",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "OpenAI",
+          "title": "Applied AI Architect, Education",
+          "url": "https://jobs.ashbyhq.com/openai/98bffd0e-05cf-4748-93f1-b115c84e37b4",
+          "section": "In this role, you will",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "OpenAI",
+          "title": "Member of Executive Operations, San Francisco",
+          "url": "https://jobs.ashbyhq.com/openai/9dfe4c27-84c0-4150-9ebe-8d4f12a95404",
+          "section": "About the Role",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "OpenAI",
+          "title": "Research Scientist",
+          "url": "https://jobs.ashbyhq.com/openai/5f0c6579-0bfb-4a06-8a43-1dd371499e10",
+          "section": "intro",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Is ClickHouse hiring in Singapore?",
+    "result": {
+      "answer": "Yes, according to context [1], ClickHouse is hiring a Senior Consulting Engineer in Singapore.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "ClickHouse",
+          "title": "Senior Consulting Engineer - Singapore",
+          "url": "https://jobs.ashbyhq.com/clickhouse/e4b96bc5-fdd1-477a-908d-815bf03dce0a",
+          "section": "Perks",
+          "score": 0.583
+        },
+        {
+          "ref": 2,
+          "company": "ClickHouse",
+          "title": "Technical Account Manager Architect - Singapore",
+          "url": "https://jobs.ashbyhq.com/clickhouse/5012ea5c-05e5-4733-ab32-d1d2b979b716",
+          "section": "What you will do",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "ClickHouse",
+          "title": "Enterprise Account Executive - Greater China Region ",
+          "url": "https://jobs.ashbyhq.com/clickhouse/ec84f30b-aa5b-4314-87c8-9cee8dc7c48d",
+          "section": "intro",
+          "score": 0.25
+        },
+        {
+          "ref": 4,
+          "company": "ClickHouse",
+          "title": "Commercial Account Executive - ASEAN",
+          "url": "https://jobs.ashbyhq.com/clickhouse/a2312b70-cc44-43ab-b0ba-31fd17f46110",
+          "section": "Perks",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "What roles does Anthropic have open in San Francisco?",
+    "result": {
+      "answer": "According to the context, Anthropic has the following roles open in San Francisco: \n\n1. M&A Program Specialist \n2. Research & Education Sales Lead, Beneficial Deployments \n3. Corporate Development Lead, Life Sciences",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Anthropic",
+          "title": "Program Specialist, M&A",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5382617008",
+          "section": "About the Role",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Anthropic",
+          "title": "Research & Education Sales Lead, Beneficial Deployments",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5415930008",
+          "section": "Preferred qualifications",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Anthropic",
+          "title": "Corporate Development Lead, Life Sciences",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5358110008",
+          "section": "About Anthropic",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Anthropic",
+          "title": "Head of APAC GTM Enablement",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5426627008",
+          "section": "Minimum qualifications",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Anthropic",
+          "title": "Partner Success Lead",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5391215008",
+          "section": "Preferred qualifications",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Is Sarvam hiring for any engineering roles?",
+    "result": {
+      "answer": "Yes, Sarvam is hiring for several engineering roles, including Performance Engineer, Inference; Performance Engineer, Kernels; Principal Security Engineer; Frontend Engineer, Vision; and Staff Software Engineer - Frontend.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Sarvam",
+          "title": "Performance Engineer, Inference",
+          "url": "https://jobs.ashbyhq.com/sarvam/7d2faba2-21a1-4a8a-aff5-f708a6959195",
+          "section": "intro",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Sarvam",
+          "title": "Principal Security Engineer",
+          "url": "https://jobs.ashbyhq.com/sarvam/2cb7b4f9-4b09-450d-945a-78a9d597c734",
+          "section": "What You'll Do",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Sarvam",
+          "title": "Performance Engineer, Kernels",
+          "url": "https://jobs.ashbyhq.com/sarvam/72783205-b637-4431-9a0e-676a8223b063",
+          "section": "intro",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Sarvam",
+          "title": "Frontend Engineer, Vision ",
+          "url": "https://jobs.ashbyhq.com/sarvam/de7eba10-6fff-4fa3-8d70-526f2cf58eb7",
+          "section": "What You'll Do",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Sarvam",
+          "title": "Staff Software Engineer - Frontend",
+          "url": "https://jobs.ashbyhq.com/sarvam/b60ac66f-a2d7-4354-b67a-aa0de5ad7e3e",
+          "section": "About the Role",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "What kind of roles does Modal have open?",
+    "result": {
+      "answer": "Modal has several open roles: Customer Engineer, Member of Technical Staff - ML Performance, and Business Operations Manager.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Modal",
+          "title": "Customer Engineer",
+          "url": "https://jobs.ashbyhq.com/modal/44b57790-528e-4f97-8613-03564316be8a",
+          "section": "The Role",
+          "score": 0.567
+        },
+        {
+          "ref": 2,
+          "company": "Gitlab",
+          "title": "Intermediate Backend Engineer, Platform Readiness",
+          "url": "https://job-boards.greenhouse.io/gitlab/jobs/8644569002",
+          "section": "and reasoning about failure modes",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "ClickHouse",
+          "title": "Langfuse - Senior Backend Engineer",
+          "url": "https://jobs.ashbyhq.com/clickhouse/31500bec-b690-4795-b4d6-0dce06a4c180",
+          "section": "intro",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Modal",
+          "title": "Member of Technical Staff - ML Performance",
+          "url": "https://jobs.ashbyhq.com/modal/af17da5e-23ca-4802-854d-5f0546e1ed32",
+          "section": "The Role",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Modal",
+          "title": "Business Operations Manager",
+          "url": "https://jobs.ashbyhq.com/modal/225b43d8-ef14-4082-b16e-005c74b42957",
+          "section": "Requirements",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which roles mention Python experience?",
+    "result": {
+      "answer": "Roles [1], [3], [4], and [5] mention Python experience.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Modal",
+          "title": "Member of Technical Staff - Python SDK",
+          "url": "https://jobs.ashbyhq.com/modal/265d6127-dd34-433b-819a-1f935572c7d8",
+          "section": "Requirements",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Anchorage",
+          "title": "Trading Operations, Transformation Lead",
+          "url": "https://jobs.lever.co/anchorage/b3c332bc-ffc5-4a2f-ab3e-de136d326408",
+          "section": "Although not a requirement, bonus points if",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Gitlab",
+          "title": "Senior Backend Engineer (Python), Agent Developer: Flow Components",
+          "url": "https://job-boards.greenhouse.io/gitlab/jobs/8704363002",
+          "section": ", you'll help build GitLab's",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Perplexity",
+          "title": "Member of Technical Staff (Software Engineer, Acceleration)",
+          "url": "https://jobs.ashbyhq.com/perplexity/f45ba174-7e99-4743-9d19-6e4d3e196458",
+          "section": "Qualifications",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Ro",
+          "title": "Senior Engineer, Applied AI",
+          "url": "https://jobs.lever.co/ro/81dd41da-ba24-435b-83c4-bd19a312744b",
+          "section": "What You\u2019ll Bring to the Team",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Are there any postings requiring TypeScript?",
+    "result": {
+      "answer": "Yes, there are postings requiring TypeScript. The ClickHouse job posting [1] and the ClickHouse job posting [4] both list TypeScript as a required skill, along with TypeScript/JavaScript and React.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "ClickHouse",
+          "title": "Senior Software Engineer (Typescript / FrontEnd) - AI/ML",
+          "url": "https://jobs.ashbyhq.com/clickhouse/33313f14-1a98-4cd1-8baa-edb818316e2b",
+          "section": "What you will bring along",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Anthropic",
+          "title": " Research Engineer / Research Scientist, Tokens",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/4951814008",
+          "section": "About Anthropic",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Discord",
+          "title": "Senior Software Engineer, Consumer Revenue",
+          "url": "https://job-boards.greenhouse.io/discord/jobs/8460791002",
+          "section": "What you should have",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "ClickHouse",
+          "title": "Senior Software Engineer (Typescript / Frontend) - AI/ML",
+          "url": "https://jobs.ashbyhq.com/clickhouse/0d26ad9b-ff73-49e3-80a0-5886b7bab172",
+          "section": "What you will bring along",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Discord",
+          "title": "Staff Data Engineer - Data Infrastructure",
+          "url": "https://job-boards.greenhouse.io/discord/jobs/8691572002",
+          "section": "intro",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Is there a role that mentions Terraform?",
+    "result": {
+      "answer": "Yes, there are several roles that mention Terraform. They are: [2] Ramp | Security Engineer, Cloud, [4] ClickHouse | Senior Cloud Infra Engineer, and [5] Robinhood | Senior Staff Software Developer, Core Infrastructure.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Anthropic",
+          "title": "Social Escalations Manager ",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5418858008",
+          "section": "Key responsibilities",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Ramp",
+          "title": " Security Engineer, Cloud",
+          "url": "https://jobs.ashbyhq.com/ramp/34413f8d-26bf-4bbc-8ade-eb309a0e2245",
+          "section": "Minimum 5 years of experience building software",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Anthropic",
+          "title": "Staff Infrastructure Engineer, Cluster Infrastructure",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5211297008",
+          "section": "Minimum qualifications",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "ClickHouse",
+          "title": "Langfuse - Senior Cloud Infra Engineer",
+          "url": "https://jobs.ashbyhq.com/clickhouse/cf36e6db-3939-4ff0-8bcf-a3bb200d9e46",
+          "section": "You will grow at Langfuse by",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Robinhood",
+          "title": "Senior Staff Software Developer, Core Infrastructure",
+          "url": "https://boards.greenhouse.io/robinhood/jobs/8142278?t=gh_src=&gh_jid=8142278",
+          "section": "What you'll do",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which companies are hiring for PostgreSQL experience?",
+    "result": {
+      "answer": "GitLab [1] and ClickHouse [2], [5] are hiring for PostgreSQL experience.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Gitlab",
+          "title": "Staff Backend Engineer, Database Automation (Go)",
+          "url": "https://job-boards.greenhouse.io/gitlab/jobs/8770702002",
+          "section": "intro",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "ClickHouse",
+          "title": "Product Marketing, Postgres",
+          "url": "https://jobs.ashbyhq.com/clickhouse/e30864bd-e36d-483f-8de2-a95d4aa3db26",
+          "section": "What you'll bring",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "ClickHouse",
+          "title": "Product Marketing, Postgres",
+          "url": "https://jobs.ashbyhq.com/clickhouse/dae8ec41-213e-41d8-9ba6-edff9778934f",
+          "section": "What you'll bring",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Linear",
+          "title": "Technical Recruiter",
+          "url": "https://jobs.ashbyhq.com/linear/fb4b6076-b943-4d95-bb9b-a66aef8275f2",
+          "section": "What you\u2019ll do",
+          "score": 0.25
+        },
+        {
+          "ref": 5,
+          "company": "ClickHouse",
+          "title": "Principal Software Engineer - Postgres",
+          "url": "https://jobs.ashbyhq.com/clickhouse/b8ebc311-9742-4a17-ac8e-36d23b925626",
+          "section": "Why Join Us",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which companies are hiring for product management roles?",
+    "result": {
+      "answer": "Sarvam and Databricks are hiring for product management roles.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Sarvam",
+          "title": "Product Manager",
+          "url": "https://jobs.ashbyhq.com/sarvam/c4bb3b2c-7608-4d57-8761-650b4222ac13",
+          "section": "About the Role",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Databricks",
+          "title": "Manager, Field Engineering - Financial Services Industry",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8557075002",
+          "section": "The impact you will have",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Linear",
+          "title": "Technical Recruiter",
+          "url": "https://jobs.ashbyhq.com/linear/fb4b6076-b943-4d95-bb9b-a66aef8275f2",
+          "section": "What you\u2019ll do",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Ramp",
+          "title": "Senior Product Marketing Manager - New Products",
+          "url": "https://jobs.ashbyhq.com/ramp/cdc3cb5a-8c6d-4820-86cf-5f9daa2b41fc",
+          "section": "Nice to have",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Anthropic",
+          "title": "Product Marketing Manager, Platform",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5424078008",
+          "section": "About the role",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Compare sales roles at Anthropic and Stripe",
+    "result": {
+      "answer": "The sales roles at Anthropic and Stripe appear to have different focuses. Anthropic's Account Executive, Product Sales - Tax role emphasizes building value in competitive situations and working on products that require deep product understanding, combined with technical knowledge, suggesting a focus on sales within a specific industry or market. In contrast, Stripe's Sales Manager, Product-Fraud & Risk role involves continuously improving sales processes, operating mechanisms, and team effectiveness, but does not specify a particular industry or market.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Stripe",
+          "title": "Pricing Strategist",
+          "url": "https://stripe.com/jobs/search?gh_jid=8187578",
+          "section": "Responsibilities",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Stripe",
+          "title": "Account Executive, Product Sales - Tax",
+          "url": "https://stripe.com/jobs/search?gh_jid=8190048",
+          "section": "Who you are",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Anthropic",
+          "title": "Staff+ Application Security Engineer  - M&A  ",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5311463008",
+          "section": "Preferred qualifications",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Stripe",
+          "title": "Sales Manager, Product- Fraud & Risk",
+          "url": "https://stripe.com/jobs/search?gh_jid=8181036",
+          "section": "What you\u2019ll do",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Stripe",
+          "title": "Pre-Sales Solutions Architect, Billing",
+          "url": "https://stripe.com/jobs/search?gh_jid=7728618",
+          "section": "intro",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which companies have the most open engineering roles right now?",
+    "result": {
+      "answer": "Based on the provided context, it appears that Modal and OpenAI have the most open engineering roles listed, as two different roles are mentioned for each company.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "OpenAI",
+          "title": "Forward Deployed Engineer - London (Spanish-speaking)",
+          "url": "https://jobs.ashbyhq.com/openai/7ce64627-b273-48e1-b3bc-ef4be0444706",
+          "section": "About the team",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Modal",
+          "title": "Systems Engineering Manager",
+          "url": "https://jobs.ashbyhq.com/modal/b16126e4-cf92-4db9-955e-0da6eec0574d",
+          "section": "About Us",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Modal",
+          "title": "Systems Engineering Manager",
+          "url": "https://jobs.ashbyhq.com/modal/aa4c345a-66e1-45b7-8c75-b7b4a0662eaa",
+          "section": "About Us",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "OpenAI",
+          "title": "Engineering Manager, Core Experimentation",
+          "url": "https://jobs.ashbyhq.com/openai/eda0d516-94bd-4257-9679-aded0d709fba",
+          "section": "In this role, you will",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "OpenAI",
+          "title": "Firmware Engineer, Robotics",
+          "url": "https://jobs.ashbyhq.com/openai/3f99bfef-5b1a-48ea-aed0-2dbd57b12722",
+          "section": "About the Role",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Is there a role for a 'Senior Dinosaur Wrangler'?",
+    "result": {
+      "answer": "There is no role for a \"Senior Dinosaur Wrangler\" in the provided context.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Ramp",
+          "title": "Senior Manager, Head of Talent Operations",
+          "url": "https://jobs.ashbyhq.com/ramp/bdd28c40-f95b-43df-bebe-3b8a25c8f602",
+          "section": "About the Role",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Spotify",
+          "title": "Senior Manager, EU Government Affairs",
+          "url": "https://jobs.lever.co/spotify/1849318a-d2e4-48a6-adad-68f8a4518f7d",
+          "section": "Where You'll Be",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Spotify",
+          "title": "Senior Editor, Podcast Editorial",
+          "url": "https://jobs.lever.co/spotify/53c07681-f798-4f2c-bef6-513c6d027c9e",
+          "section": "Where You'll Be",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Ramp",
+          "title": "Senior Corporate Paralegal",
+          "url": "https://jobs.ashbyhq.com/ramp/314d4881-e8f2-4e61-a102-3469f9566759",
+          "section": "About the Role",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Spotify",
+          "title": "Senior Revenue Accountant, Advertising",
+          "url": "https://jobs.lever.co/spotify/439b6276-df60-4a26-be26-ebdbc0891d4c",
+          "section": "Where You'll Be",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Are there any postings mentioning Fortran?",
+    "result": {
+      "answer": "I couldn't find any postings mentioning Fortran.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Cloudflare",
+          "title": "Senior Software Engineer - Egress (Go/Rust)",
+          "url": "https://boards.greenhouse.io/cloudflare/jobs/7463793?gh_jid=7463793",
+          "section": "Responsibilities",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Anthropic",
+          "title": " Research Engineer / Research Scientist, Tokens",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/4951814008",
+          "section": "About Anthropic",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Discord",
+          "title": "Senior Software Engineer, Consumer Revenue",
+          "url": "https://job-boards.greenhouse.io/discord/jobs/8460791002",
+          "section": "What you should have",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Perplexity",
+          "title": "Member of Technical Staff (AI Inference Engineer)",
+          "url": "https://jobs.ashbyhq.com/perplexity/8a976851-9bef-4b07-8d36-567fa9540aef",
+          "section": "What you will work on",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Ro",
+          "title": "Talent Coordinator (Temp)",
+          "url": "https://jobs.lever.co/ro/d763d6d5-03cc-41ff-81ee-d324a00ad3a5",
+          "section": "What You'll Do",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Is there a marketing role that requires blockchain experience?",
+    "result": {
+      "answer": "I couldn't find any direct mention of a marketing role that specifically requires blockchain experience. However, I did find a Stripe role, Enterprise Account Executive, Privy [5], that mentions experience in fintech, crypto, or a related industry, which could potentially involve blockchain, but it's not explicitly stated that blockchain experience is required for this role.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Databricks",
+          "title": " Sales Dev AI Program Manager",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8582993002",
+          "section": "The impact you'll have",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Stripe",
+          "title": "Product Marketing Lead, Billing",
+          "url": "https://stripe.com/jobs/search?gh_jid=8090203",
+          "section": "Minimum requirements",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Notion",
+          "title": "Head of Demand Engine",
+          "url": "https://jobs.ashbyhq.com/notion/adb34b7e-89f3-4365-9f8f-4c98d50cc0fd",
+          "section": "Nice to Haves",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Discord",
+          "title": "Staff Software Engineer, Enterprise Platform",
+          "url": "https://job-boards.greenhouse.io/discord/jobs/8675185002",
+          "section": "intro",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Stripe",
+          "title": "Enterprise Account Executive, Privy",
+          "url": "https://stripe.com/jobs/search?gh_jid=8232741",
+          "section": "Minimum requirements",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "What's the highest-paying engineering role you can find?",
+    "result": {
+      "answer": "The highest-paying engineering role listed is the [5] Anthropic | [DH] Engineering Manager, AI Observability | San Francisco, CA, with an annual salary range of $405,000 - $850,000 USD. [4]",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Spotify",
+          "title": "Senior Product Manager - Subscriptions",
+          "url": "https://jobs.lever.co/spotify/a57db22d-dc0d-4f36-9a2e-34acdf1ec046",
+          "section": "Where You'll Be",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Anthropic",
+          "title": "Head of Business Technology Engineering",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5431374008",
+          "section": "Responsibilities",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Anthropic",
+          "title": "Research Operations, Reinforcement Learning",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5422117008",
+          "section": "Key responsibilities",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Anthropic",
+          "title": "Software Engineer, Research Infrastructure",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5283063008",
+          "section": "Minimum Qualifications",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Anthropic",
+          "title": "[DH] Engineering Manager, AI Observability",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5429202008",
+          "section": "Responsibilities",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which companies offer salaries above $300k?",
+    "result": {
+      "answer": "According to the context, the following companies offer salaries above $300k: Anthropic (Tax Director: $230,000 - $300,000) and Databricks (Senior Payroll Accountant: not specified).",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Databricks",
+          "title": "Senior Payroll Accountant",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8604591002",
+          "section": "The impact you will have",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Anthropic",
+          "title": "Software Engineer, Labs",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5017202008",
+          "section": "Responsibilities",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Anthropic",
+          "title": "Tax Director, Provision & Compliance",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5358122008",
+          "section": "Preferred qualifications",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Databricks",
+          "title": "Startup Hunter Account Executive",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8643831002",
+          "section": "intro",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Asana",
+          "title": "Solutions Engineer, Command",
+          "url": "https://www.asana.com/jobs/apply/8078097?gh_jid=8078097",
+          "section": "About you",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "What's the salary range for a Product Manager role at Ramp?",
+    "result": {
+      "answer": "I couldn't find any information about a Product Manager role at Ramp, as the provided context is from Anthropic, not Ramp.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Anthropic",
+          "title": "Product Operations Manager, Embedded",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5179891008",
+          "section": "Responsibilities",
+          "score": 0.583
+        },
+        {
+          "ref": 2,
+          "company": "Anthropic",
+          "title": "Product Manager, Business Technology",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5397737008",
+          "section": "What you'll do",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Anthropic",
+          "title": "Product Manager, Research (Code) ",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5324349008",
+          "section": "Preferred Qualifications",
+          "score": 0.5
+        },
+        {
+          "ref": 4,
+          "company": "Anthropic",
+          "title": "Social Escalations Manager ",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5418858008",
+          "section": "Minimum qualifications",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Anthropic",
+          "title": "Engineering Manager, Growth",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5361472008",
+          "section": "Preferred qualifications",
+          "score": 0.267
+        }
+      ]
+    }
+  },
+  {
+    "question": "What roles does Notion have open right now?",
+    "result": {
+      "answer": "According to the provided context, Notion has open roles for Startup Program & Experience Lead, Global Strategic Partner Manager, Enterprise Technical Support Engineer.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Ramp",
+          "title": "Software Engineer, Production Engineering",
+          "url": "https://jobs.ashbyhq.com/ramp/be496b52-cfbf-494e-b862-61fb4a188b24",
+          "section": "About Production Engineering",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Notion",
+          "title": "Startup Program & Experience Lead",
+          "url": "https://jobs.ashbyhq.com/notion/c35370d3-ac9c-4ad7-947b-77ad6e9e176c",
+          "section": "About Us",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Ramp",
+          "title": "Tech Lead and Manager (TLM), Production Engineering",
+          "url": "https://jobs.ashbyhq.com/ramp/c01a2ed9-fcb4-48c0-ad7a-c59476d9c986",
+          "section": "About Production Engineering",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Notion",
+          "title": "Global Strategic Partner Manager",
+          "url": "https://jobs.ashbyhq.com/notion/ed0afe5b-df69-400c-bf48-81d2269da4fd",
+          "section": "About Notion",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Notion",
+          "title": "Enterprise Technical Support Engineer",
+          "url": "https://jobs.ashbyhq.com/notion/15f37b73-d217-469a-adfc-2e50cc9e2374",
+          "section": "Nice to Haves",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Is Perplexity hiring for research positions?",
+    "result": {
+      "answer": "Yes, Perplexity is hiring for research positions, as indicated by the Perplexity Research Fellowship [1] and the Member of Technical Staff (Machine Learning Research Engineer) [3] roles.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Perplexity",
+          "title": "Perplexity Research Fellowship",
+          "url": "https://jobs.ashbyhq.com/perplexity/ab076e26-adf1-414f-a006-7b1bdc9247c8",
+          "section": "intro",
+          "score": 0.7
+        },
+        {
+          "ref": 2,
+          "company": "Perplexity",
+          "title": "Public Policy Associate",
+          "url": "https://jobs.ashbyhq.com/perplexity/846e6848-dfb5-4f60-ac5d-5803f6a5e73d",
+          "section": "WHAT YOU'LL DO",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Perplexity",
+          "title": "Member of Technical Staff (Machine Learning Research Engineer)",
+          "url": "https://jobs.ashbyhq.com/perplexity/1a3df802-9238-4827-ab1f-12a9d1e4b81c",
+          "section": "intro",
+          "score": 0.41
+        },
+        {
+          "ref": 4,
+          "company": "Perplexity",
+          "title": "Member of Technical Staff (Software Engineer, Computer)",
+          "url": "https://jobs.ashbyhq.com/perplexity/4c0ac8bb-55bf-4fb0-b7d7-36d69f55e6c8",
+          "section": "intro",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Perplexity",
+          "title": "Technical Recruiter (London, Serbia)",
+          "url": "https://jobs.ashbyhq.com/perplexity/d38e4b28-6ced-46b0-bb58-37ba49776e77",
+          "section": "What You'll Do",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "What departments does Linear have open roles in?",
+    "result": {
+      "answer": "Linear has open roles in Product Support, Account Executive, Product Manager, Senior/Staff Product Designer, and Implementation Manager.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Linear",
+          "title": "Product Support Specialist, Europe",
+          "url": "https://jobs.ashbyhq.com/linear/820d0d5a-0930-475c-b494-23e18ad2aa68",
+          "section": "A story about our mission",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Linear",
+          "title": "Account Executive, Startups",
+          "url": "https://jobs.ashbyhq.com/linear/c21af93e-210f-4969-8eaa-90fb16a5b720",
+          "section": "intro",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Linear",
+          "title": "Product Manager",
+          "url": "https://jobs.ashbyhq.com/linear/86abcce0-04b2-405c-9a8e-e0ca84813914",
+          "section": "A story about our mission",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Linear",
+          "title": "Senior / Staff Product Designer",
+          "url": "https://jobs.ashbyhq.com/linear/a264869e-f058-487c-ab7f-9b77dffa427c",
+          "section": "intro",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Linear",
+          "title": "Implementation Manager",
+          "url": "https://jobs.ashbyhq.com/linear/cec84487-60f2-4216-a514-dcf190c86c1e",
+          "section": "A story about our mission",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Is Hightouch currently hiring?",
+    "result": {
+      "answer": "Yes, Hightouch is currently hiring for the position of Backend Engineer, Platform.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Hightouch",
+          "title": "Backend Engineer, Platform",
+          "url": "https://jobs.ashbyhq.com/hightouch/7f302222-2e06-4e37-8766-87b3bf6068e6",
+          "section": "The Role",
+          "score": 0.833
+        }
+      ]
+    }
+  },
+  {
+    "question": "What's Robinhood's current open engineering headcount look like?",
+    "result": {
+      "answer": "Unfortunately, the provided context does not mention the current open engineering headcount at Robinhood.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Robinhood",
+          "title": "Senior Security Engineer, Detection & Response",
+          "url": "https://boards.greenhouse.io/robinhood/jobs/8202863?t=gh_src=&gh_jid=8202863",
+          "section": "About the team + role",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Databricks",
+          "title": "Sr. Developer Advocate, Open Source \u2014 Omnigent",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8716730002",
+          "section": "The impact you will have",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Databricks",
+          "title": "Sr. Developer Advocate, Open Source \u2014 Omnigent",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8716187002",
+          "section": "The impact you will have",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Robinhood",
+          "title": "Engineering Manager, International",
+          "url": "https://boards.greenhouse.io/robinhood/jobs/8175213?t=gh_src=&gh_jid=8175213",
+          "section": "About the team + role",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Discord",
+          "title": "Engineering Manager, Safety",
+          "url": "https://job-boards.greenhouse.io/discord/jobs/8637688002",
+          "section": "intro",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which companies are hiring for security engineers?",
+    "result": {
+      "answer": "Notion is hiring for Security Engineers, one job posting [2] is for Security Engineer in San Francisco, California, and another [5] is for Security Engineer in Dublin, Ireland.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Linear",
+          "title": "Technical Recruiter",
+          "url": "https://jobs.ashbyhq.com/linear/fb4b6076-b943-4d95-bb9b-a66aef8275f2",
+          "section": "What you\u2019ll do",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Notion",
+          "title": "Security Engineer, Corporate Security",
+          "url": "https://jobs.ashbyhq.com/notion/477768e1-37af-49bc-a4de-6564e0a4ec54",
+          "section": "Nice to Haves",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Anthropic",
+          "title": "Software Engineering Manager, Network Security",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5098092008",
+          "section": "Minimum Requirements",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Modal",
+          "title": "Account Manager",
+          "url": "https://jobs.ashbyhq.com/modal/d33a46c8-44d8-4bf4-bdca-dd11c0a48588",
+          "section": "About the Role",
+          "score": 0.25
+        },
+        {
+          "ref": 5,
+          "company": "Notion",
+          "title": "Security Engineer, Corporate Security",
+          "url": "https://jobs.ashbyhq.com/notion/866dc41d-3a50-4957-9a14-df27eae847e8",
+          "section": "Nice to Haves",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Are there any DevOps roles open right now?",
+    "result": {
+      "answer": "Unfortunately, there are no DevOps roles explicitly listed in the provided job postings. However, some positions like [4] Perplexity | Member of Technical Staff (Search Core DevOps Engineer) and [1] Anthropic | Staff+ Software Engineer, Developer Productivity mention experience with cloud infrastructure, containers, and orchestration tools, which may be relevant to a DevOps role.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Anthropic",
+          "title": "Staff+ Software Engineer, Developer Productivity",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5110511008",
+          "section": "Responsibilities",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Spotify",
+          "title": "Senior Data Engineer - Data Platform",
+          "url": "https://jobs.lever.co/spotify/204f6cd7-98a3-4360-87e3-8876adf087da",
+          "section": "Who You Are",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Stripe",
+          "title": "Software Engineer, New Grad",
+          "url": "https://stripe.com/jobs/search?gh_jid=8130930",
+          "section": "About Stripe",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Perplexity",
+          "title": "Member of Technical Staff (Search Core DevOps Engineer)",
+          "url": "https://jobs.ashbyhq.com/perplexity/739411fa-6580-4c8b-9960-035d5fa3c00e",
+          "section": "Qualifications",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Anthropic",
+          "title": "Staff+ Software Engineer, Developer Experience",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5398218008",
+          "section": "What you'll do",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which companies have open roles for technical writers?",
+    "result": {
+      "answer": "Based on the provided context, I couldn't find any specific information about open roles for technical writers. However, I can tell you that companies Perplexity [3] and Stripe [5] have open roles, but the job descriptions for those roles don't specifically mention technical writing.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Anthropic",
+          "title": "Copywriter, Developer",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5423931008",
+          "section": "Responsibilities",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "OpenAI",
+          "title": "Software Engineer, Safety Engineering",
+          "url": "https://jobs.ashbyhq.com/openai/9371f837-70ef-4387-a4b7-70f252b04aa5",
+          "section": "In this role, you will",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Perplexity",
+          "title": "Senior Editor",
+          "url": "https://jobs.ashbyhq.com/perplexity/ebd5d9b3-39c4-498b-85a6-2f565e001d7e",
+          "section": "Qualifications",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Perplexity",
+          "title": "Writer",
+          "url": "https://jobs.ashbyhq.com/perplexity/f05bd47b-bed8-4f00-9d9c-026c72578e82",
+          "section": "Qualifications",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Stripe",
+          "title": "Editorial Director, Brand & Creative Partnerships",
+          "url": "https://stripe.com/jobs/search?gh_jid=8203216",
+          "section": "Who you are",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which companies are hiring for solutions architects?",
+    "result": {
+      "answer": "Based on the context, Databricks is hiring for a Solution Architect role in both France and the US, as well as a Solutions Architect Manager in France. Gitlab is also hiring for a Manager, Solutions Architects in San Francisco.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Databricks",
+          "title": "Manager, Field Engineering France  - Specialist Solutions Architects",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8517065002",
+          "section": "intro",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Databricks",
+          "title": "Sr. Solutions Architect - Agencies ",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8758645002",
+          "section": "Nice to Have",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Anthropic",
+          "title": "Applied AI Architect, Industries",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5390765008",
+          "section": "Minimum years of experience",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Databricks",
+          "title": "Recruiter, GTM Field Engineering",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8771700002",
+          "section": "The impact you will have",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Gitlab",
+          "title": "Manager, Solutions Architects - San Francisco ",
+          "url": "https://job-boards.greenhouse.io/gitlab/jobs/8396674002",
+          "section": "intro",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which roles mention Java experience?",
+    "result": {
+      "answer": "Roles [3] Ramp | Product Operations Specialist | Generalist | New York, NY (HQ) and [4] Ramp | Product Operations Specialist | Travel | New York, NY (HQ) and [5] Stripe | Integration Reliability Engineer, Payments | Canada mention Java experience.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "OpenAI",
+          "title": "Data Engineer",
+          "url": "https://jobs.ashbyhq.com/openai/fc5bbc77-a30c-4e7a-9acc-8a2e748545b4",
+          "section": "In this role, you will",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Notion",
+          "title": "Forward Deployed Engineer",
+          "url": "https://jobs.ashbyhq.com/notion/4bc0802c-b5e0-411c-be01-daaea2bc3ae0",
+          "section": "Skills You'll Need to Bring",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Ramp",
+          "title": "Product Operations Specialist | Generalist",
+          "url": "https://jobs.ashbyhq.com/ramp/081dbe29-8a06-4cb2-bda5-4b0bfb35c2e8",
+          "section": "What You Need",
+          "score": 0.343
+        },
+        {
+          "ref": 4,
+          "company": "Ramp",
+          "title": "Product Operations Specialist | Travel",
+          "url": "https://jobs.ashbyhq.com/ramp/925fce22-61af-4d26-8f20-90696a3b6704",
+          "section": "Nice to Haves",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Stripe",
+          "title": "Integration Reliability Engineer, Payments",
+          "url": "https://stripe.com/jobs/search?gh_jid=8054241",
+          "section": "Who you are",
+          "score": 0.333
+        }
+      ]
+    }
+  },
+  {
+    "question": "Are there any postings requiring Docker?",
+    "result": {
+      "answer": "Yes, there are postings that require Docker. For example, the Cloudflare Systems Engineer position requires advanced, hands-on experience with Kubernetes and Docker in production environments, including cluster operations, resource management, networking, and debugging containerized workloads. [1] Additionally, the Cloudflare Systems Engineer Hybrid posting requires experience with containerized workloads at scale using Kubernetes, Docker, or similar orchestration platforms. [3]",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Cloudflare",
+          "title": "Systems Engineer, Product Platform Tools",
+          "url": "https://boards.greenhouse.io/cloudflare/jobs/8089031?gh_jid=8089031",
+          "section": "Responsibilities",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Anthropic",
+          "title": " Research Engineer / Research Scientist, Tokens",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/4951814008",
+          "section": "About Anthropic",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Cloudflare",
+          "title": "Systems Engineer",
+          "url": "https://boards.greenhouse.io/cloudflare/jobs/8203784?gh_jid=8203784",
+          "section": "Responsibilities",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Discord",
+          "title": "Engineering Manager, Platform Security",
+          "url": "https://job-boards.greenhouse.io/discord/jobs/8649856002",
+          "section": "Bonus points if you have\u2026",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Cloudflare",
+          "title": "Software Engineer",
+          "url": "https://boards.greenhouse.io/cloudflare/jobs/8212060?gh_jid=8212060",
+          "section": "Responsibilities",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Is there a role mentioning GraphQL?",
+    "result": {
+      "answer": "Yes, there are several roles that mention GraphQL, including [2] Hex, [3] Pinterest, and [5] Gitlab.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Gitlab",
+          "title": "Senior Backend Engineer, AI Engineering: Chat   ",
+          "url": "https://job-boards.greenhouse.io/gitlab/jobs/8621733002",
+          "section": "What you\u2019ll bring",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Hex",
+          "title": "Software Engineer, Fullstack",
+          "url": "https://jobs.ashbyhq.com/hex/996c38fd-0a7a-4df9-a5c3-4234b20b7b71",
+          "section": "About you",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Pinterest",
+          "title": "Staff Software Engineer, Web Product Enablement ",
+          "url": "https://www.pinterestcareers.com/jobs/?gh_jid=8075888",
+          "section": "What you\u2019ll do",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Discord",
+          "title": "Staff Software Engineer, Enterprise Platform",
+          "url": "https://job-boards.greenhouse.io/discord/jobs/8675185002",
+          "section": "intro",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Gitlab",
+          "title": "Senior Backend Engineer (Ruby), AI Catalog: External Agents",
+          "url": "https://job-boards.greenhouse.io/gitlab/jobs/8759577002",
+          "section": "What you\u2019ll bring",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which companies want candidates with AWS experience?",
+    "result": {
+      "answer": "Both Anthropic (jobs [2] and [4]) and ClickHouse (job [5]) have job postings that explicitly mention or imply the need for AWS experience.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Anthropic",
+          "title": "Staff Software Engineer, Inference",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5150472008",
+          "section": "About the role",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Anthropic",
+          "title": "AWS GTM Partnership Lead, Enterprise",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5391180008",
+          "section": "Minimum years of experience",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Cloudflare",
+          "title": "Digital Natives Account Executive",
+          "url": "https://boards.greenhouse.io/cloudflare/jobs/8180715?gh_jid=8180715",
+          "section": "Responsibilities",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Anthropic",
+          "title": "AWS GTM Partnership Lead, Global System Integrators",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5391184008",
+          "section": "Minimum years of experience",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "ClickHouse",
+          "title": "Senior Consulting Engineer - AMER",
+          "url": "https://jobs.ashbyhq.com/clickhouse/acaa223a-663e-445f-85f7-a5a4eb7f4f05",
+          "section": "Requirements",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which roles were posted today?",
+    "result": {
+      "answer": "Three roles were posted today: Video Strategist at Figma, Researcher, Alignment CoT Monitorability at OpenAI, and three Executive Assistant roles at Figma.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Figma",
+          "title": "Video Strategist",
+          "url": "https://boards.greenhouse.io/figma/jobs/6204556004?gh_jid=6204556004",
+          "section": "What you\u2019ll do at Figma",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "OpenAI",
+          "title": "Researcher, Alignment CoT Monitorability",
+          "url": "https://jobs.ashbyhq.com/openai/82492010-ea96-449d-9949-b726b1a22616",
+          "section": "About the Team",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Figma",
+          "title": "Executive Assistant, People",
+          "url": "https://boards.greenhouse.io/figma/jobs/5969046004?gh_jid=5969046004",
+          "section": "What you'll do at Figma",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Anchorage",
+          "title": "Derivatives Trader",
+          "url": "https://jobs.lever.co/anchorage/9f6d4223-389c-44e3-99b1-50f46c4855da",
+          "section": "In this position, you will",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Figma",
+          "title": "Executive Assistant, Chief People Officer",
+          "url": "https://boards.greenhouse.io/figma/jobs/6132356004?gh_jid=6132356004",
+          "section": "What you'll do at Figma",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Has the ClickHouse 'Senior Software Engineer - Postgres' role changed?",
+    "result": {
+      "answer": "There is no information in the provided context to suggest that the ClickHouse 'Senior Software Engineer - Postgres' role has changed. The text provided appears to be identical in parts [1] through [3], indicating that these might be different versions of the same job posting or that the changes were not visible in the provided excerpt.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "ClickHouse",
+          "title": "Senior Software Engineer - Postgres",
+          "url": "https://jobs.ashbyhq.com/clickhouse/b196cca6-6cb3-4019-8d0f-1eaa7850bc07",
+          "section": "About the Role",
+          "score": 0.833
+        },
+        {
+          "ref": 2,
+          "company": "ClickHouse",
+          "title": "Senior Software Engineer - Postgres",
+          "url": "https://jobs.ashbyhq.com/clickhouse/84c812c4-2194-4a9d-a9f9-b68c3836eb4a",
+          "section": "About the Role",
+          "score": 0.75
+        },
+        {
+          "ref": 3,
+          "company": "ClickHouse",
+          "title": "Senior Software Engineer - Postgres",
+          "url": "https://jobs.ashbyhq.com/clickhouse/8165f425-e57f-4d33-a584-38e5e9cb02bb",
+          "section": "About the Role",
+          "score": 0.583
+        },
+        {
+          "ref": 4,
+          "company": "ClickHouse",
+          "title": "Principal Software Engineer - Postgres",
+          "url": "https://jobs.ashbyhq.com/clickhouse/a11e0267-85fb-4eaa-920b-849edbb5b625",
+          "section": "About the Role",
+          "score": 0.277
+        },
+        {
+          "ref": 5,
+          "company": "ClickHouse",
+          "title": "Senior Infrastructure Engineer - Postgres",
+          "url": "https://jobs.ashbyhq.com/clickhouse/cad55156-d34b-4071-9c0f-c730a1d09d55",
+          "section": "intro",
+          "score": 0.254
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which companies have posted the most new roles this month?",
+    "result": {
+      "answer": "Unfortunately, the provided context does not contain information on the number of new roles posted by each company this month. It only includes job postings for specific roles within those companies, but does not provide an overall count of new roles posted by each company.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Stripe",
+          "title": "Staff Software Engineer, Deployment Platform",
+          "url": "https://stripe.com/jobs/search?gh_jid=8038771",
+          "section": "Preferred Requirements",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Linear",
+          "title": "Product Manager",
+          "url": "https://jobs.ashbyhq.com/linear/b7669c4b-eeca-421d-ba9a-d90203f6fcb2",
+          "section": "What you'll do",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Stripe",
+          "title": "Account Executive, Product Sales - Tax",
+          "url": "https://stripe.com/jobs/search?gh_jid=8190048",
+          "section": "Preferred qualifications",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Brex",
+          "title": "Staff Product Manager, Growth",
+          "url": "https://www.brex.com/careers/8436528002?gh_jid=8436528002",
+          "section": "Why join us",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Stripe",
+          "title": "Staff Backend Engineer, Datalake Platform",
+          "url": "https://stripe.com/jobs/search?gh_jid=8035723",
+          "section": "Preferred requirements",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Is there a role requiring 20+ years of blockchain experience?",
+    "result": {
+      "answer": "I couldn't find any role with 20+ years of blockchain experience in the provided context.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Stripe",
+          "title": "Software Engineer - Smart Contract, Bridge",
+          "url": "https://stripe.com/jobs/search?gh_jid=7507904",
+          "section": "Minimum Requirements",
+          "score": 0.7
+        },
+        {
+          "ref": 2,
+          "company": "Coinbase",
+          "title": "Senior Staff Software Engineer - Blockchain Platform",
+          "url": "https://www.coinbase.com/careers/positions/7366208?gh_jid=7366208",
+          "section": "What you'll do",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Coinbase",
+          "title": "Associate Product Manager Intern",
+          "url": "https://www.coinbase.com/careers/positions/8168322?gh_jid=8168322",
+          "section": "What you'll do",
+          "score": 0.41
+        },
+        {
+          "ref": 4,
+          "company": "Coinbase",
+          "title": "Senior Software Engineer- Blockchain Network",
+          "url": "https://www.coinbase.com/careers/positions/8094196?gh_jid=8094196",
+          "section": "What you'll do",
+          "score": 0.367
+        },
+        {
+          "ref": 5,
+          "company": "Stripe",
+          "title": "Enterprise Account Executive, Privy",
+          "url": "https://stripe.com/jobs/search?gh_jid=8232743",
+          "section": "Minimum requirements",
+          "score": 0.333
+        }
+      ]
+    }
+  },
+  {
+    "question": "Are there any postings for a 'Time Travel Consultant'?",
+    "result": {
+      "answer": "There are no postings for a \"Time Travel Consultant\".",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Ramp",
+          "title": "Product Operations Specialist | Travel",
+          "url": "https://jobs.ashbyhq.com/ramp/925fce22-61af-4d26-8f20-90696a3b6704",
+          "section": "Nice to Haves",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Databricks",
+          "title": "Executive Assistant ",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8603380002",
+          "section": "The impact you will have",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Discord",
+          "title": "Senior Software Engineer, Consumer Revenue",
+          "url": "https://job-boards.greenhouse.io/discord/jobs/8460791002",
+          "section": "What you should have",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Linear",
+          "title": "Product Support Specialist, Pacific/Mountain Time",
+          "url": "https://jobs.ashbyhq.com/linear/d062065e-05bb-42ce-a430-ec205695cc2e",
+          "section": "intro",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Databricks",
+          "title": "Director, Travel & Expense",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8582308002",
+          "section": "The impact you will have",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Is there an entry-level Chief Executive Officer role?",
+    "result": {
+      "answer": "There is no entry-level Chief Executive Officer role mentioned in the provided context.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Figma",
+          "title": "Executive Assistant, Chief People Officer",
+          "url": "https://boards.greenhouse.io/figma/jobs/6132356004?gh_jid=6132356004",
+          "section": "intro",
+          "score": 0.833
+        },
+        {
+          "ref": 2,
+          "company": "Databricks",
+          "title": "Field CTO - America Industries",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8306218002",
+          "section": "intro",
+          "score": 0.25
+        },
+        {
+          "ref": 3,
+          "company": "Gitlab",
+          "title": "Manager, Procurement",
+          "url": "https://job-boards.greenhouse.io/gitlab/jobs/8642786002",
+          "section": "intro",
+          "score": 0.2
+        },
+        {
+          "ref": 4,
+          "company": "Figma",
+          "title": "Executive Assistant, People",
+          "url": "https://boards.greenhouse.io/figma/jobs/5969046004?gh_jid=5969046004",
+          "section": "What you'll do at Figma",
+          "score": 0.2
+        }
+      ]
+    }
+  },
+  {
+    "question": "What's the difference between the data engineer roles at two different companies?",
+    "result": {
+      "answer": "The data engineer roles at ClickHouse and Perplexity seem to have distinct differences. At ClickHouse, the role involves building deep product knowledge, learning how high-growth companies architect for scale, and developing commercial skills, with an emphasis on technical instincts being a competitive advantage. In contrast, the Perplexity data engineer role focuses on ensuring data access and sharing, automating data quality and maintenance, improving data team productivity, and partnering with various teams to translate analytical needs into durable data systems.",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "ClickHouse",
+          "title": "Commercial Account Executive",
+          "url": "https://jobs.ashbyhq.com/clickhouse/d2fe6df7-bd9b-4880-9c1d-4d6f1f37ac64",
+          "section": "What You Bring",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Perplexity",
+          "title": "Member of Data Staff (Analytics Engineer)",
+          "url": "https://jobs.ashbyhq.com/perplexity/fed8d2c4-9c82-43ad-a168-434146c759ff",
+          "section": "What You'll Do",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Databricks",
+          "title": "Manager, Delivery Solutions Architects",
+          "url": "https://databricks.com/company/careers/open-positions/job?gh_jid=8545248002",
+          "section": "The impact you will have",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "ClickHouse",
+          "title": "Commercial Account Executive - Canada",
+          "url": "https://jobs.ashbyhq.com/clickhouse/b0fee4b7-6e83-4b79-befd-5bf9ae6e8d7b",
+          "section": "What You Bring",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Sarvam",
+          "title": "Agent Engineer",
+          "url": "https://jobs.ashbyhq.com/sarvam/36f89b00-2010-4d23-aae3-17a2f53d9eaa",
+          "section": "Who you are",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "Which companies don't currently have any open roles?",
+    "result": {
+      "answer": "According to the provided context, the companies that don't currently have any open roles mentioned are: Notion, Anthropic, and OpenAI (aside from the Account Associate role which is not the primary focus of the listed job postings).",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "OpenAI",
+          "title": "Partner Director, McKinsey Alliance ",
+          "url": "https://jobs.ashbyhq.com/openai/28c96920-a412-47c0-88f8-342790d779ff",
+          "section": "In this role, you will",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "Notion",
+          "title": "GTM Recruiter, Tokyo",
+          "url": "https://jobs.ashbyhq.com/notion/86138d2b-2e7a-4cbb-b108-549280cc4f03",
+          "section": "Nice to haves",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "OpenAI",
+          "title": "Account Associate, Japan",
+          "url": "https://jobs.ashbyhq.com/openai/2f3f416d-cc2a-4836-bcff-daee80c94e95",
+          "section": "About the Role",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Anthropic",
+          "title": "Anthropic Fellows Program, ML Systems & Reinforcement Learning",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5183051008",
+          "section": "Logistics Requirements",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Notion",
+          "title": "Software Engineer, New Grad (Dec 2026)",
+          "url": "https://jobs.ashbyhq.com/notion/e32799d2-8ef8-4803-8189-c72514afa816",
+          "section": "Nice to Haves",
+          "score": 0.25
+        }
+      ]
+    }
+  },
+  {
+    "question": "What's a role that requires both Python and Go?",
+    "result": {
+      "answer": "Based on the provided context, it appears that roles involving Load and Fault Environments, such as the Senior Software Engineer, Load and Fault Environments at Robinhood, might require both Python and Go. [3]",
+      "sources": [
+        {
+          "ref": 1,
+          "company": "Modal",
+          "title": "Member of Technical Staff - Python SDK",
+          "url": "https://jobs.ashbyhq.com/modal/265d6127-dd34-433b-819a-1f935572c7d8",
+          "section": "Requirements",
+          "score": 0.5
+        },
+        {
+          "ref": 2,
+          "company": "OpenAI",
+          "title": "Manager, Forward Deployed Engineering- NYC",
+          "url": "https://jobs.ashbyhq.com/openai/5bbc43df-558a-4e4b-a0cf-83f185c664d7",
+          "section": "In this role you will",
+          "score": 0.5
+        },
+        {
+          "ref": 3,
+          "company": "Robinhood",
+          "title": "Senior Software Engineer, Load and Fault Environments",
+          "url": "https://boards.greenhouse.io/robinhood/jobs/8132616?t=gh_src=&gh_jid=8132616",
+          "section": "What you bring",
+          "score": 0.333
+        },
+        {
+          "ref": 4,
+          "company": "Anthropic",
+          "title": "Staff Software Engineer, Code RL",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5370690008",
+          "section": "Minimum qualifications",
+          "score": 0.333
+        },
+        {
+          "ref": 5,
+          "company": "Anthropic",
+          "title": "Staff Software Engineer, Environments Infrastructure",
+          "url": "https://job-boards.greenhouse.io/anthropic/jobs/5367436008",
+          "section": "About the role",
+          "score": 0.25
+        }
+      ]
+    }
+  }
+]
