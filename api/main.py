@@ -1,3 +1,4 @@
+#  api key: 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
 import requests
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -144,6 +145,7 @@ def query(q: Query):
             "title": h["payload"].get("title"),
             "url": h["payload"].get("url"),
             "section": h["payload"].get("section"),
+            "text": h["payload"].get("text"),
             "score": round(h["score"], 3),
         }
         for i, h in enumerate(hits, 1)
