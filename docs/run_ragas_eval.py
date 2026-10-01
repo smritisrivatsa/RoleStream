@@ -2,14 +2,18 @@ import json
 from langchain_anthropic import ChatAnthropic
 from ragas.llms import LangchainLLMWrapper
 from ragas.dataset_schema import SingleTurnSample, EvaluationDataset
-from ragas.metrics import Faithfulness, ContextPrecision, ContextRecall
+from ragas.metrics import Faithfulness, LLMContextPrecisionWithoutReference, ResponseRelevancy
 from ragas import evaluate
+from langchain_huggingface import HuggingFaceEmbeddings
+from ragas.embeddings import LangchainEmbeddingsWrapper
 
 INPUT_FILE = "golden_results.json"
 OUTPUT_FILE = "ragas_scores.json"
 
 claude_llm = ChatAnthropic(model="claude-haiku-4-5-20251001", temperature=0)
 evaluator_llm = LangchainLLMWrapper(claude_llm)
+local_embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
+evaluator_embeddings = LangchainEmbeddingsWrapper(local_embeddings)
 
 
 def load_samples():
@@ -49,8 +53,9 @@ def run():
 
     result = evaluate(
         dataset=dataset,
-        metrics=[Faithfulness(), ContextPrecision(), ContextRecall()],
+        metrics=[Faithfulness(), LLMContextPrecisionWithoutReference(), ResponseRelevancy()],
         llm=evaluator_llm,
+        embeddings=evaluator_embeddings,
     )
 
     print(result)
