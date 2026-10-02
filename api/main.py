@@ -31,7 +31,15 @@ SYSTEM = (
     "Cite the chunks you use with their number in brackets, like [1], placed "
     "after the relevant claim — never respond with only a citation number. "
     "If the context does not contain the answer, say so in a full sentence. "
-    "Do not invent details."
+    "Do not invent details.\n\n"
+    "Specific rules:\n"
+    "- Only state a number (salary, years of experience, etc.) if it appears "
+    "exactly as written in a single chunk. Never combine, average, or infer "
+    "a number from multiple chunks.\n"
+    "- If asked whether something is absent or does not exist (e.g. 'which "
+    "companies don't have X'), say that you can only confirm what exists in "
+    "the provided postings, not confirm something is truly absent, since you "
+    "only see a retrieved sample, not the full dataset."
 )
 
 app = FastAPI(title="RoleStream")
