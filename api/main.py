@@ -1,4 +1,3 @@
-#  api key: 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
 import requests
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -21,7 +20,6 @@ def extract_company(question: str) -> str | None:
     """check if any known company name appears in the question, so we can
     auto-scope the search filter without the user needing to pass it explicitly."""
     question_lower = question.lower()
-    # Sort by length descending so longer/more specific names match first
     for company in sorted(KNOWN_COMPANIES, key=len, reverse=True):
         if company.lower() in question_lower:
             return company
@@ -53,7 +51,6 @@ def embed(text: str) -> tuple[list[float], dict]:
 
 
 def search(dense_vector: list[float], sparse_vector: dict, k: int, company: str | None) -> list[dict]:
-    # Retrieve more than k so we have room to dedupe by posting
     raw_limit = k * 3
 
     query_filter = None
@@ -103,6 +100,21 @@ def search(dense_vector: list[float], sparse_vector: dict, k: int, company: str 
     # matching "Go-To-Market") rather than genuinely relevant chunks.
     MIN_SCORE = 0.2
     filtered = [h for h in deduped if h["score"] >= MIN_SCORE]
+
+    # Cap results per company so cross-company questions don't get
+    # dominated by one company that happened to score well on everything.
+    # Skipped entirely when a company filter is already applied, since
+    # in that case every result is from the same company by design.
+    if company is None:
+        max_per_company = max(2, k // 2)
+        company_counts = {}
+        diverse = []
+        for h in filtered:
+            c = h["payload"].get("company")
+            if company_counts.get(c, 0) < max_per_company:
+                diverse.append(h)
+                company_counts[c] = company_counts.get(c, 0) + 1
+        filtered = diverse
 
     return filtered[:k]
 
