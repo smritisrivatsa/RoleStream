@@ -1,3 +1,4 @@
+import re
 import requests
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
@@ -16,14 +17,22 @@ KNOWN_COMPANIES = [
     "ClickHouse", "Modal", "Hex", "Hightouch",
 ]
 
+
 def extract_company(question: str) -> str | None:
-    """check if any known company name appears in the question, so we can
-    auto-scope the search filter without the user needing to pass it explicitly."""
-    question_lower = question.lower()
+    """Check if any known company name appears in the question as a whole
+    word, so we can auto-scope the search filter. Uses word boundaries to
+    avoid false matches like 'Ro' inside 'roles'. If multiple companies are
+    mentioned (e.g. a comparison question), don't filter at all — let
+    hybrid search and the diversity cap surface both."""
+    matches = []
     for company in sorted(KNOWN_COMPANIES, key=len, reverse=True):
-        if company.lower() in question_lower:
-            return company
+        pattern = r'\b' + re.escape(company) + r'\b'
+        if re.search(pattern, question, re.IGNORECASE):
+            matches.append(company)
+    if len(matches) == 1:
+        return matches[0]
     return None
+
 
 SYSTEM = (
     "You answer questions about job postings using ONLY the numbered context "
@@ -94,7 +103,6 @@ def search(dense_vector: list[float], sparse_vector: dict, k: int, company: str 
     r.raise_for_status()
     hits = r.json()["result"]["points"]
 
-    # Keep only the best-scoring chunk per posting_id
     seen = {}
     for h in hits:
         pid = h["payload"]["posting_id"]
@@ -103,16 +111,9 @@ def search(dense_vector: list[float], sparse_vector: dict, k: int, company: str 
 
     deduped = sorted(seen.values(), key=lambda h: h["score"], reverse=True)
 
-    # Drop weak matches entirely rather than passing them to the LLM —
-    # low RRF scores tend to be coincidental keyword overlaps (e.g. "Go"
-    # matching "Go-To-Market") rather than genuinely relevant chunks.
     MIN_SCORE = 0.2
     filtered = [h for h in deduped if h["score"] >= MIN_SCORE]
 
-    # Cap results per company so cross-company questions don't get
-    # dominated by one company that happened to score well on everything.
-    # Skipped entirely when a company filter is already applied, since
-    # in that case every result is from the same company by design.
     if company is None:
         max_per_company = max(2, k // 2)
         company_counts = {}
