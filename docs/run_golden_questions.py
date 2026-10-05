@@ -68,7 +68,7 @@ def run():
     for i, question in enumerate(QUESTIONS, 1):
         print(f"[{i}/{len(QUESTIONS)}] {question}")
         try:
-            r = requests.post(API_URL, json={"question": question}, timeout=120)
+            r = requests.post(API_URL, json={"question": question}, timeout=300)
             r.raise_for_status()
             data = r.json()
         except requests.RequestException as e:

@@ -48,7 +48,11 @@ SYSTEM = (
     "- If asked whether something is absent or does not exist (e.g. 'which "
     "companies don't have X'), say that you can only confirm what exists in "
     "the provided postings, not confirm something is truly absent, since you "
-    "only see a retrieved sample, not the full dataset."
+    "only see a retrieved sample, not the full dataset.\n"
+    "- The context contains NO posting dates or timestamps. For any question "
+    "about when a role was posted, what is new, 'today', 'this week', "
+    "'recently', or whether a posting has changed, say that posting dates "
+    "are not available in the data. Never guess."
 )
 
 app = FastAPI(title="RoleStream")

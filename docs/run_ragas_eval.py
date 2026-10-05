@@ -1,17 +1,23 @@
 import json
 from langchain_anthropic import ChatAnthropic
-from ragas.llms import LangchainLLMWrapper
-from ragas.dataset_schema import SingleTurnSample, EvaluationDataset
-from ragas.metrics import Faithfulness, LLMContextPrecisionWithoutReference, ResponseRelevancy
-from ragas import evaluate
 from langchain_huggingface import HuggingFaceEmbeddings
+from ragas import evaluate
+from ragas.dataset_schema import SingleTurnSample, EvaluationDataset
 from ragas.embeddings import LangchainEmbeddingsWrapper
+from ragas.llms import LangchainLLMWrapper
+from ragas.metrics import (
+    Faithfulness,
+    LLMContextPrecisionWithoutReference,
+    ResponseRelevancy,
+)
+from ragas.run_config import RunConfig
 
 INPUT_FILE = "golden_results.json"
 OUTPUT_FILE = "ragas_scores.json"
 
 claude_llm = ChatAnthropic(model="claude-haiku-4-5-20251001", temperature=0)
 evaluator_llm = LangchainLLMWrapper(claude_llm)
+
 local_embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2")
 evaluator_embeddings = LangchainEmbeddingsWrapper(local_embeddings)
 
@@ -25,16 +31,9 @@ def load_samples():
         result = entry.get("result", {})
         answer = result.get("answer")
         sources = result.get("sources", [])
-
-        # Skip entries that errored out (e.g. services weren't running)
         if not answer or "error" in result:
             continue
-
-        # RAGAS needs the actual retrieved text, not just metadata —
-        # your /query response only returns metadata in "sources", so we
-        # reconstruct a reasonable context string from what's available.
         contexts = [s.get("text") for s in sources if s.get("text")]
-
         samples.append(
             SingleTurnSample(
                 user_input=entry["question"],
@@ -56,13 +55,18 @@ def run():
         metrics=[Faithfulness(), LLMContextPrecisionWithoutReference(), ResponseRelevancy()],
         llm=evaluator_llm,
         embeddings=evaluator_embeddings,
+        run_config=RunConfig(timeout=300, max_workers=4, max_retries=5),
     )
 
-    print(result)
+    df = result.to_pandas()
+    metric_cols = ["faithfulness", "llm_context_precision_without_reference", "answer_relevancy"]
 
-    with open(OUTPUT_FILE, "w") as f:
-        json.dump(result.to_pandas().to_dict(orient="records"), f, indent=2)
+    print("\n=== Scores (mean over non-NaN rows) ===")
+    for col in metric_cols:
+        valid = df[col].dropna()
+        print(f"{col}: {valid.mean():.4f}  (n={len(valid)}, NaN/dropped={len(df) - len(valid)})")
 
+    df.to_json(OUTPUT_FILE, orient="records", indent=2)
     print(f"\nDetailed scores saved to {OUTPUT_FILE}")
 
 
