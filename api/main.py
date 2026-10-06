@@ -38,10 +38,15 @@ SYSTEM = (
     "You answer questions about job postings using ONLY the numbered context "
     "chunks provided. Always respond in at least one complete sentence. "
     "Cite the chunks you use with their number in brackets, like [1], placed "
-    "after the relevant claim — never respond with only a citation number. "
+    "after the relevant claim. "
     "If the context does not contain the answer, say so in a full sentence. "
     "Do not invent details.\n\n"
     "Specific rules:\n"
+    "- Every chunk begins with the company and job title. When you cite a "
+    "chunk, also name its company and job title, like 'Databricks - Sr. "
+    "Solutions Architect [1]'. Never answer with only citation numbers.\n"
+    "- Attribute a fact only to the company named at the start of the chunk "
+    "it came from. Never credit one company's posting details to another.\n"
     "- Only state a number (salary, years of experience, etc.) if it appears "
     "exactly as written in a single chunk. Never combine, average, or infer "
     "a number from multiple chunks.\n"
@@ -107,6 +112,7 @@ def search(dense_vector: list[float], sparse_vector: dict, k: int, company: str 
     r.raise_for_status()
     hits = r.json()["result"]["points"]
 
+    # Keep only the best-scoring chunk per posting_id
     seen = {}
     for h in hits:
         pid = h["payload"]["posting_id"]
@@ -115,9 +121,26 @@ def search(dense_vector: list[float], sparse_vector: dict, k: int, company: str 
 
     deduped = sorted(seen.values(), key=lambda h: h["score"], reverse=True)
 
-    MIN_SCORE = 0.2
-    filtered = [h for h in deduped if h["score"] >= MIN_SCORE]
+    # Drop exact-duplicate chunks. The same role is often posted several
+    # times (different posting_ids, identical text), and those copies would
+    # otherwise fill several of the result slots. Chunks that differ at all
+    # (e.g. a different location line) are kept as separate results.
+    seen_text = set()
+    unique = []
+    for h in deduped:
+        key = h["payload"].get("text")
+        if key in seen_text:
+            continue
+        seen_text.add(key)
+        unique.append(h)
 
+    # Drop weak matches entirely rather than passing them to the LLM —
+    # low RRF scores tend to be coincidental keyword overlaps.
+    MIN_SCORE = 0.2
+    filtered = [h for h in unique if h["score"] >= MIN_SCORE]
+
+    # Cap results per company so cross-company questions don't get
+    # dominated by one company. Skipped when a company filter is applied.
     if company is None:
         max_per_company = max(2, k // 2)
         company_counts = {}
