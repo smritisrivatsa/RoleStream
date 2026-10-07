@@ -1,3 +1,4 @@
+import math
 import re
 import requests
 from fastapi import FastAPI, HTTPException
@@ -18,20 +19,16 @@ KNOWN_COMPANIES = [
 ]
 
 
-def extract_company(question: str) -> str | None:
-    """Check if any known company name appears in the question as a whole
-    word, so we can auto-scope the search filter. Uses word boundaries to
-    avoid false matches like 'Ro' inside 'roles'. If multiple companies are
-    mentioned (e.g. a comparison question), don't filter at all — let
-    hybrid search and the diversity cap surface both."""
-    matches = []
-    for company in sorted(KNOWN_COMPANIES, key=len, reverse=True):
-        pattern = r'\b' + re.escape(company) + r'\b'
-        if re.search(pattern, question, re.IGNORECASE):
-            matches.append(company)
-    if len(matches) == 1:
-        return matches[0]
-    return None
+def extract_companies(question: str) -> list[str]:
+    """Return every known company named in the question, in the order they
+    appear. Uses word boundaries so 'Ro' doesn't match inside 'roles'."""
+    found = []
+    for company in KNOWN_COMPANIES:
+        m = re.search(r'\b' + re.escape(company) + r'\b', question, re.IGNORECASE)
+        if m:
+            found.append((m.start(), company))
+    found.sort()
+    return [c for _, c in found]
 
 
 SYSTEM = (
@@ -60,6 +57,17 @@ SYSTEM = (
     "are not available in the data. Never guess."
 )
 
+FILLER_WORDS = {
+    "which", "what", "whats", "who", "where", "when", "how", "is", "are", "was",
+    "were", "do", "does", "did", "there", "any", "a", "an", "the", "of", "for",
+    "to", "in", "at", "on", "by", "with", "and", "or", "me", "you", "can",
+    "companies", "company", "hiring", "hire", "hires", "roles", "role", "jobs",
+    "job", "postings", "posting", "posted", "positions", "position", "open",
+    "openings", "opening", "currently", "right", "now", "mention", "mentions",
+    "mentioning", "require", "requires", "requiring", "required", "want",
+    "wants", "experience", "find", "show", "list", "tell", "give", "s", "compare",
+}
+
 app = FastAPI(title="RoleStream")
 
 
@@ -74,6 +82,20 @@ def embed(text: str) -> tuple[list[float], dict]:
     r.raise_for_status()
     data = r.json()
     return data["embeddings"][0], data["sparse_embeddings"][0]
+
+
+def rewrite_query(question: str) -> str:
+    """Drop question framing and generic job-posting words, keep the topic
+    words. Deterministic and cannot invent terms. If only one very short
+    word survives (e.g. 'Go'), it is too ambiguous to embed alone, so fall
+    back to the original question."""
+    words = re.findall(r"[A-Za-z0-9+#./-]+", question)
+    kept = [w for w in words if w.lower().strip(".") not in FILLER_WORDS]
+    if not kept:
+        return question
+    if len(kept) == 1 and len(kept[0]) <= 3:
+        return question
+    return " ".join(kept)
 
 
 def search(dense_vector: list[float], sparse_vector: dict, k: int, company: str | None) -> list[dict]:
@@ -121,10 +143,7 @@ def search(dense_vector: list[float], sparse_vector: dict, k: int, company: str 
 
     deduped = sorted(seen.values(), key=lambda h: h["score"], reverse=True)
 
-    # Drop exact-duplicate chunks. The same role is often posted several
-    # times (different posting_ids, identical text), and those copies would
-    # otherwise fill several of the result slots. Chunks that differ at all
-    # (e.g. a different location line) are kept as separate results.
+    # Drop exact-duplicate chunks (same role posted several times).
     seen_text = set()
     unique = []
     for h in deduped:
@@ -134,13 +153,12 @@ def search(dense_vector: list[float], sparse_vector: dict, k: int, company: str 
         seen_text.add(key)
         unique.append(h)
 
-    # Drop weak matches entirely rather than passing them to the LLM —
-    # low RRF scores tend to be coincidental keyword overlaps.
+    # Drop weak matches entirely rather than passing them to the LLM.
     MIN_SCORE = 0.2
     filtered = [h for h in unique if h["score"] >= MIN_SCORE]
 
-    # Cap results per company so cross-company questions don't get
-    # dominated by one company. Skipped when a company filter is applied.
+    # Cap results per company so generic questions don't get dominated by
+    # one company. Skipped when a company filter is applied.
     if company is None:
         max_per_company = max(2, k // 2)
         company_counts = {}
@@ -153,6 +171,19 @@ def search(dense_vector: list[float], sparse_vector: dict, k: int, company: str 
         filtered = diverse
 
     return filtered[:k]
+
+
+def retrieve(dense_vec: list[float], sparse_vec: dict, k: int, companies: list[str]) -> list[dict]:
+    """No company named: one open search. One company: search scoped to it.
+    Two or more (a comparison): one scoped search per company, grouped in the
+    order the companies were mentioned, so each side gets fair representation."""
+    if len(companies) >= 2:
+        per_company_k = max(2, math.ceil(k / len(companies)))
+        hits = []
+        for c in companies:
+            hits.extend(search(dense_vec, sparse_vec, per_company_k, c))
+        return hits
+    return search(dense_vec, sparse_vec, k, companies[0] if companies else None)
 
 
 def generate(question: str, hits: list[dict]) -> str:
@@ -178,9 +209,9 @@ def generate(question: str, hits: list[dict]) -> str:
 @app.post("/query")
 def query(q: Query):
     try:
-        company = q.company or extract_company(q.question)
-        dense_vec, sparse_vec = embed(q.question)
-        hits = search(dense_vec, sparse_vec, q.top_k, company)
+        companies = [q.company] if q.company else extract_companies(q.question)
+        dense_vec, sparse_vec = embed(rewrite_query(q.question))
+        hits = retrieve(dense_vec, sparse_vec, q.top_k, companies)
         if not hits:
             return {"answer": "No matching postings found.", "sources": []}
         answer = generate(q.question, hits)
