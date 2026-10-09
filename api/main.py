@@ -1,9 +1,11 @@
 import math
 import re
 import time
+from pathlib import Path
 
 import requests
 from fastapi import FastAPI, HTTPException
+from fastapi.responses import FileResponse
 from prometheus_client import Counter, Histogram
 from prometheus_fastapi_instrumentator import Instrumentator
 from pydantic import BaseModel
@@ -221,6 +223,14 @@ def generate(question: str, hits: list[dict]) -> str:
     )
     r.raise_for_status()
     return r.json()["message"]["content"]
+
+
+STATIC_DIR = Path(__file__).parent / "static"
+
+
+@app.get("/", include_in_schema=False)
+def index():
+    return FileResponse(STATIC_DIR / "index.html")
 
 
 @app.post("/query")
