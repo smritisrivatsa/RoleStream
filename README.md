@@ -78,6 +78,8 @@ All three rows after the first are n=55 with nothing dropped. Judge noise on a r
 
 13 of the 55 questions are ones where the right answer is a refusal: 7 ask about roles that don't exist (COBOL, Fortran, a "Time Travel Consultant") and 6 ask about posting dates the data doesn't have. Those answers score well on faithfulness (roughly 0.88) but badly on relevancy (roughly 0.33), because the judge doesn't reward "that isn't in the data" as an on-topic answer. That's why the last row exists: on the 42 answerable questions, relevancy is 0.773 and faithfulness is 0.781. The `docs/split_scores.py` script reproduces both views.
 
+**Retrieval check.** RAGAS depends on a judge model, so I also measure retrieval directly. For 12 questions I defined the true postings with a SQL query against Postgres (a keyword in the description, or a phrase in the title) and checked how many of the 5 retrieved postings are in that set. Mean precision@5 is 0.88, against roughly 0.05 for picking postings at random from the 5,831 open ones, and every question returned at least one correct posting. Retrieval is deterministic, so this reproduces exactly (`docs/eval_retrieval.py`). The weak spots are "data engineer" (2 of 5, and the label only counts exact title matches, so related roles like Analytics Engineer count as misses) and "Go" (1 of 5, for the reasons in the limitations section). The labels are keyword matches, so a posting that mentions Kubernetes only in a nice-to-have list still counts.
+
 I also track context precision, but I don't trust it with this judge and I'm not reporting it.
 
 ### What changed the numbers
