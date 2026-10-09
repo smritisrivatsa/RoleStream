@@ -98,6 +98,20 @@ I also track context precision, but I don't trust it with this judge and I'm not
 
 I tried a prompt that told the model to restate the question, put one role per line, and only list a role if its chunk explicitly mentioned the topic. On paper it should have helped relevancy. Instead faithfulness dropped to about 0.76 and relevancy to about 0.64, and answers got long enough that more questions timed out during the golden run (8 failures on the first pass, versus 2 before). I reverted it. Two other runs of that experiment were thrown out because the judge hit timeouts and an empty credit balance and dropped rows, so the comparison above rests on one run with 1 to 3 dropped rows per metric. The gap was bigger than the dropped rows could explain, but it's not as clean as I'd like.
 
+## Monitoring and load
+
+The API exposes Prometheus metrics at `/metrics`: request counts and status codes, plus a histogram of time spent in each stage (embedding, retrieval, generation) and a counter for queries where nothing cleared the score threshold. Prometheus and Grafana run from a separate compose file, and the dashboard is provisioned from `monitoring/grafana/dashboards/rolestream.json`, so it loads automatically:
+
+```bash
+docker compose -f docker-compose.yml -f docker-compose.monitoring.yml up -d prometheus grafana
+```
+
+Grafana is at `localhost:3000` (admin / admin) and Prometheus at `localhost:9090`.
+
+![Grafana dashboard during a load test](docs/grafana-dashboard.png)
+
+`docs/load_test.py` sends 30 questions one at a time after a warm-up request, so model loading doesn't count. On my M1 MacBook I ran it twice: all 60 requests succeeded, with p50 9.2 s both times, p95 17.3 s and 17.5 s, and a max of 27.8 s and 21.1 s. Nearly all of that is generation with the 3B model; retrieval stays well under a second. I only tested one request at a time because Ollama runs one generation at a time here, so concurrent requests would mostly queue. Going faster means a smaller or quantized model, streaming the answer token by token, or a GPU box, not tuning the pipeline around it.
+
 ## Known limitations
 
 - **Short ambiguous words break retrieval.** Searching for "Go" matches the word "Go-To-Market" in a pile of sales postings, and the 3B model then happily lists them as Go jobs. Neither the dense model nor BM25 can tell the language from the word. Searching "Golang" works better. I left this alone instead of special-casing one token.
@@ -113,7 +127,7 @@ I tried a prompt that told the model to restate the question, put one role per l
 - Add recall@5 on a hand-labeled set of questions, so retrieval has a deterministic metric that doesn't depend on a judge model.
 - A cross-encoder reranker over the top 20 hybrid results, to cut down on weak chunks in the context.
 - Try a larger generator (8B local, or Haiku) and compare against the 3B model.
-- Prometheus and Grafana for latency and error rates, plus a load test.
+- Consumer lag metrics from the Go consumer, so the whole pipeline is on the dashboard, not just the API.
 - A simple web frontend and a demo video.
 
 Relevancy is the number I most want to move. It's 0.668 overall and 0.773 on answerable questions, and my target is 0.80 on the answerable set. I expect the reranker and a better model to matter more than further prompt changes.
