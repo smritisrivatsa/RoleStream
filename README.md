@@ -72,8 +72,11 @@ I wrote 55 questions (`docs/run_golden_questions.py`) covering language and tool
 | First baseline | 0.76 | 0.60 |
 | After adding the "no dates in the data" rule | 0.789 | 0.578 |
 | Cross-company retrieval + query rewriter | **0.805** | **0.668** |
+| Same run, answerable questions only (n=42) | 0.781 | 0.773 |
 
 All three rows after the first are n=55 with nothing dropped. Judge noise on a run like this is around 0.03, so the faithfulness gain from the last change is within noise. The relevancy gain (+0.09) is not.
+
+13 of the 55 questions are ones where the right answer is a refusal: 7 ask about roles that don't exist (COBOL, Fortran, a "Time Travel Consultant") and 6 ask about posting dates the data doesn't have. Those answers score well on faithfulness (roughly 0.88) but badly on relevancy (roughly 0.33), because the judge doesn't reward "that isn't in the data" as an on-topic answer. That's why the last row exists: on the 42 answerable questions, relevancy is 0.773 and faithfulness is 0.781. The `docs/split_scores.py` script reproduces both views.
 
 I also track context precision, but I don't trust it with this judge and I'm not reporting it.
 
@@ -97,21 +100,21 @@ I tried a prompt that told the model to restate the question, put one role per l
 
 - **Short ambiguous words break retrieval.** Searching for "Go" matches the word "Go-To-Market" in a pile of sales postings, and the 3B model then happily lists them as Go jobs. Neither the dense model nor BM25 can tell the language from the word. Searching "Golang" works better. I left this alone instead of special-casing one token.
 - **The 3B model has a ceiling.** It sometimes blurs two companies into one sentence, and it pads answers with weak matches when the retrieved chunks are poor.
-- **RAGAS penalizes correct refusals.** When the right answer is "there is no COBOL role in the data", faithfulness and relevancy both score it near zero. The refusal questions are in the 55, so they pull both averages down. I haven't split them out yet.
+- **RAGAS penalizes correct refusals on relevancy.** When the right answer is "there is no COBOL role in the data", answer relevancy scores it low, which drags the all-questions average down (0.668 versus 0.773 on answerable questions only). Faithfulness doesn't have this problem. I report both views, but I haven't yet verified by hand that every refusal answer actually says the role doesn't exist.
 - **I tuned on the same 55 questions I score on.** Some of the improvement is probably fitting to that set. A held-out set is on the to-do list.
 - **One Anthropic "evergreen role" chunk shows up for unrelated queries.** It's boilerplate that should be stripped at chunking time, which means re-embedding everything, so it's not done.
 - **Aggregate questions don't work.** "Which companies have the most open roles?" needs a count, and RAG can't count. This should go to SQL against Postgres.
 
 ## What's next
 
-- Split refusal questions out of the RAGAS averages and report refusal accuracy separately.
+- Check the refusal answers by hand and report refusal accuracy as its own number.
 - Add recall@5 on a hand-labeled set of questions, so retrieval has a deterministic metric that doesn't depend on a judge model.
 - A cross-encoder reranker over the top 20 hybrid results, to cut down on weak chunks in the context.
 - Try a larger generator (8B local, or Haiku) and compare against the 3B model.
 - Prometheus and Grafana for latency and error rates, plus a load test.
 - A simple web frontend and a demo video.
 
-Relevancy at 0.668 is the number I most want to move. My target is 0.80, and I expect the reranker and a better model to matter more than further prompt changes.
+Relevancy is the number I most want to move. It's 0.668 overall and 0.773 on answerable questions, and my target is 0.80 on the answerable set. I expect the reranker and a better model to matter more than further prompt changes.
 
 ## Layout
 
