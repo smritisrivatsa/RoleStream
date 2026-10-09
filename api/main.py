@@ -46,8 +46,9 @@ SYSTEM = (
     "Do not invent details.\n\n"
     "Specific rules:\n"
     "- Every chunk begins with the company and job title. When you cite a "
-    "chunk, also name its company and job title, like 'Databricks - Sr. "
-    "Solutions Architect [1]'. Never answer with only citation numbers.\n"
+    "chunk, write that chunk's own company name and job title, then its "
+    "number in brackets. Never answer with only citation numbers, and never "
+    "mention a company or job title that is not in the chunks.\n"
     "- Attribute a fact only to the company named at the start of the chunk "
     "it came from. Never credit one company's posting details to another.\n"
     "- Only state a number (salary, years of experience, etc.) if it appears "
@@ -214,6 +215,7 @@ def generate(question: str, hits: list[dict]) -> str:
         json={
             "model": MODEL,
             "stream": False,
+            "keep_alive": "1h",
             "messages": [
                 {"role": "system", "content": SYSTEM},
                 {"role": "user", "content": f"Context:\n{context}\n\nQuestion: {question}"},
@@ -233,18 +235,31 @@ def index():
     return FileResponse(STATIC_DIR / "index.html")
 
 
+@app.get("/stats")
+def stats():
+    try:
+        r = requests.get(f"{QDRANT_URL}/collections/{COLLECTION}", timeout=5)
+        r.raise_for_status()
+        return {"passages": r.json()["result"]["points_count"]}
+    except (requests.RequestException, KeyError):
+        raise HTTPException(status_code=502, detail="Qdrant unavailable")
+
+
 @app.post("/query")
 def query(q: Query):
     try:
         companies = [q.company] if q.company else extract_companies(q.question)
+        timings = {}
 
         t = time.perf_counter()
         dense_vec, sparse_vec = embed(rewrite_query(q.question))
-        STAGE_LATENCY.labels("embedding").observe(time.perf_counter() - t)
+        timings["embedding"] = time.perf_counter() - t
+        STAGE_LATENCY.labels("embedding").observe(timings["embedding"])
 
         t = time.perf_counter()
         hits = retrieve(dense_vec, sparse_vec, q.top_k, companies)
-        STAGE_LATENCY.labels("retrieval").observe(time.perf_counter() - t)
+        timings["retrieval"] = time.perf_counter() - t
+        STAGE_LATENCY.labels("retrieval").observe(timings["retrieval"])
 
         if not hits:
             EMPTY_RETRIEVALS.inc()
@@ -252,7 +267,8 @@ def query(q: Query):
 
         t = time.perf_counter()
         answer = generate(q.question, hits)
-        STAGE_LATENCY.labels("generation").observe(time.perf_counter() - t)
+        timings["generation"] = time.perf_counter() - t
+        STAGE_LATENCY.labels("generation").observe(timings["generation"])
     except requests.RequestException as e:
         raise HTTPException(status_code=502, detail=str(e))
     sources = [
@@ -267,4 +283,4 @@ def query(q: Query):
         }
         for i, h in enumerate(hits, 1)
     ]
-    return {"answer": answer, "sources": sources}
+    return {"answer": answer, "sources": sources, "timings": timings}

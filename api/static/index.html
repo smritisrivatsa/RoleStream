@@ -4,133 +4,255 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>RoleStream</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 22'%3E%3Crect x='2' y='4' width='18' height='3' rx='1.5' fill='%230f1b2d'/%3E%3Crect x='2' y='9.5' width='13' height='3' rx='1.5' fill='%230f1b2d'/%3E%3Crect x='2' y='15' width='8' height='3' rx='1.5' fill='%230f1b2d'/%3E%3Ccircle cx='18' cy='16.5' r='2.5' fill='%230a6c85'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --page: #edf1f5;
-    --ink: #142033;
-    --muted: #55657a;
-    --line: #c7d1de;
-    --accent: #2f4be0;
-    --accent-soft: #dce3ff;
-    --danger: #a3262a;
+    --canvas: #f2f5f8;
+    --sheet: #ffffff;
+    --ink: #0f1b2d;
+    --muted: #586a80;
+    --line: #dbe2ea;
+    --accent: #0a6c85;
+    --accent-ink: #06485a;
+    --accent-soft: #dff0f4;
+    --mark: #ffe58a;
+    --mark-soft: #fff6d1;
+    --danger: #b3261e;
+    --danger-soft: #fdecea;
+    --display: "Bricolage Grotesque", "Public Sans", system-ui, sans-serif;
+    --body: "Public Sans", system-ui, sans-serif;
   }
   * { box-sizing: border-box; }
+  html { background: var(--canvas); }
   body {
-    margin: 0;
-    background: var(--page);
-    color: var(--ink);
-    font: 400 1rem/1.6 "Public Sans", system-ui, sans-serif;
+    margin: 0; min-height: 100vh; position: relative;
+    color: var(--ink); background: transparent;
+    font: 400 1rem/1.6 var(--body);
   }
-  main { max-width: 68rem; margin: 0 auto; padding: 3rem 1rem 4rem; }
-  h1 {
-    margin: 0;
-    font: 700 clamp(2.4rem, 7vw, 4rem)/1 "Bricolage Grotesque", "Public Sans", sans-serif;
-    letter-spacing: -0.03em;
+  /* Dot grid and a pale glow that fade out below the top of the page */
+  body::before {
+    content: ""; position: absolute; inset: 0 0 auto 0; height: 34rem; z-index: -1;
+    background:
+      radial-gradient(50rem 22rem at 50% -6rem, #d6edf2 0%, rgba(214,237,242,0) 70%),
+      radial-gradient(circle at 1px 1px, #c3cfdc 1px, transparent 0) 0 0 / 24px 24px;
+    -webkit-mask-image: linear-gradient(to bottom, #000 35%, transparent);
+            mask-image: linear-gradient(to bottom, #000 35%, transparent);
   }
-  .lede { margin: 0.75rem 0 2rem; max-width: 36rem; color: var(--muted); }
+  .wrap { max-width: 70rem; margin: 0 auto; padding: 0 1.25rem; }
 
-  form { display: flex; gap: 0.5rem; }
-  input[type="text"] {
-    flex: 1; min-width: 0;
-    padding: 0.9rem 1rem;
-    font: inherit; font-size: 1.1rem; color: var(--ink);
-    background: #fff;
-    border: 2px solid var(--ink); border-radius: 6px;
+  header.bar { display: flex; align-items: center; justify-content: space-between; padding: 1.25rem 0; }
+  .brand { display: inline-flex; align-items: center; gap: 0.55rem; font: 700 1.15rem var(--display); letter-spacing: -0.01em; color: var(--ink); text-decoration: none; }
+  .brand svg rect { fill: var(--ink); } .brand svg circle { fill: var(--accent); }
+  .bar a.repo { color: var(--muted); font-size: 0.92rem; text-decoration: none; border-bottom: 1px solid var(--line); }
+  .bar a.repo:hover { color: var(--ink); border-color: var(--ink); }
+
+  .hero { padding: 3.25rem 0 0; }
+  h1 { margin: 0; max-width: 16em; font: 700 clamp(2.1rem, 5.2vw, 3.4rem)/1.05 var(--display); letter-spacing: -0.028em; }
+  .lede { margin: 1rem 0 0; max-width: 34rem; color: var(--muted); font-size: 1.08rem; }
+  .stats { display: flex; align-items: center; gap: 0.55rem; margin: 1rem 0 0; color: var(--muted); font-size: 0.92rem; }
+  .stats[hidden] { display: none; }
+  .stats i { flex: none; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--accent); }
+  .stats b { color: var(--ink); font-weight: 600; }
+  body.searched .hero { padding-top: 1rem; }
+  body.searched h1 { font-size: clamp(1.7rem, 3.4vw, 2.2rem); }
+  body.searched .lede, body.searched .stats { display: none; }
+  body.searched form.search { margin-top: 1.1rem; }
+
+  form.search {
+    display: flex; align-items: center; gap: 0.5rem; margin-top: 2rem; padding: 0.45rem 0.45rem 0.45rem 1.1rem;
+    background: var(--sheet); border: 1px solid var(--line); border-radius: 14px;
+    box-shadow: 0 1px 2px rgba(15,27,45,.06), 0 18px 36px -18px rgba(15,27,45,.28);
+    transition: border-color 120ms, box-shadow 120ms;
   }
-  button.ask {
-    padding: 0 1.6rem;
-    font: 600 1rem "Public Sans", sans-serif;
-    color: #fff; background: var(--ink);
-    border: 2px solid var(--ink); border-radius: 6px; cursor: pointer;
-  }
-  button.ask:disabled { opacity: 0.55; cursor: progress; }
+  form.search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(10,108,133,.18), 0 18px 36px -18px rgba(15,27,45,.28); }
+  form.search svg { flex: none; color: var(--muted); }
+  input[type="text"] { flex: 1; min-width: 0; padding: 0.7rem 0.2rem; font: inherit; font-size: 1.12rem; color: var(--ink); background: transparent; border: 0; outline: none; }
+  input::placeholder { color: #8b9aad; }
+  button.ask { padding: 0.8rem 1.6rem; font: 600 1rem var(--body); color: #fff; background: var(--accent); border: 0; border-radius: 10px; cursor: pointer; transition: background 120ms; }
+  button.ask:hover { background: var(--accent-ink); }
+  button.ask:disabled { opacity: .6; cursor: progress; }
   :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  input:focus-visible { outline: none; }
 
-  .examples { margin: 0.9rem 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem; }
-  .examples button {
-    padding: 0; font: inherit; font-size: 0.95rem; color: var(--accent);
-    background: none; border: 0; border-bottom: 1px solid currentColor; cursor: pointer;
-  }
+  .try { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+  .try .lead { color: var(--muted); font-size: 0.92rem; margin-right: 0.25rem; }
+  .try button { padding: 0.35rem 0.8rem; font: 500 0.9rem var(--body); color: var(--ink); background: rgba(255,255,255,.7); border: 1px solid var(--line); border-radius: 8px; cursor: pointer; transition: border-color 120ms, background 120ms; }
+  .try button:hover { border-color: var(--accent); background: #fff; }
 
-  #status { min-height: 1.6rem; margin: 2rem 0 0.5rem; color: var(--muted); font-size: 0.95rem; }
-  #status.error { color: var(--danger); }
+  #status { margin: 1.75rem 0 0.5rem; min-height: 1.4rem; color: var(--muted); font-size: 0.93rem; }
+  .timings { display: flex; flex-wrap: wrap; gap: 0.2rem 1.4rem; margin: 0 0 0.9rem; color: var(--muted); font-size: 0.85rem; }
+  .timings[hidden] { display: none; }
+  .timings b { color: var(--ink); font-weight: 600; }
+  #status.error { padding: 0.9rem 1rem; color: var(--danger); background: var(--danger-soft); border: 1px solid #f3c7c3; border-radius: 10px; }
 
-  #result { display: none; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 3rem; margin-top: 0.5rem; }
-  #result.show { display: grid; }
-  @media (max-width: 52rem) { #result.show { grid-template-columns: 1fr; gap: 2rem; } form { flex-direction: column; } button.ask { padding: 0.8rem; } }
+  .sheet { display: none; background: var(--sheet); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 1px 2px rgba(15,27,45,.05), 0 24px 48px -28px rgba(15,27,45,.25); }
+  .sheet.show { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
+  .col { padding: 1.75rem 2rem 2rem; min-width: 0; }
+  .col + .col { border-left: 1px solid var(--line); background: #fafbfd; border-radius: 0 16px 16px 0; }
+  .col h2 { margin: 0 0 1rem; font: 700 0.95rem var(--display); color: var(--muted); letter-spacing: 0; }
 
-  #answer { max-width: 40rem; font-size: 1.1rem; line-height: 1.7; white-space: pre-wrap; }
+  .stick { position: sticky; top: 1.25rem; }
+  .hint { margin: -0.5rem 0 0.75rem; color: var(--muted); font-size: 0.85rem; }
+  .who { font-weight: 600; }
+  .dash { margin: 0 0.1em; color: var(--muted); }
+  .caveat { display: inline-block; margin: 0 0.15em; padding: 0 0.45em; font-size: 0.8em; font-style: italic; line-height: 1.5; color: var(--muted); background: #eef2f6; border-radius: 5px; }
+  #answer { max-width: 40rem; font-size: 1.08rem; line-height: 1.75; }
+  #answer p { margin: 0 0 1rem; }
+  #answer ul { margin: 0 0 1rem; padding-left: 1.2rem; }
+  #answer li { margin: 0.45rem 0; padding-left: 0.2rem; }
+  #answer li::marker { color: var(--accent); }
+
   .cite {
-    display: inline-block; min-width: 1.5em; margin: 0 0.1em; padding: 0 0.3em;
-    font: 600 0.8em/1.5 "Public Sans", sans-serif; text-align: center; vertical-align: 0.1em;
-    color: var(--accent); background: var(--accent-soft);
-    border: 0; border-radius: 4px; cursor: pointer;
-    transition: background 120ms, color 120ms;
+    display: inline-flex; align-items: center; justify-content: center; min-width: 1.45em; height: 1.45em; margin: 0 0.12em; padding: 0 0.3em;
+    font: 700 0.72em/1 var(--body); vertical-align: 0.1em;
+    color: var(--accent-ink); background: var(--accent-soft); border: 0; border-radius: 5px; cursor: pointer;
+    transition: background 120ms, box-shadow 120ms;
   }
-  .cite.on { color: #fff; background: var(--accent); }
+  .cite.on { color: var(--ink); background: var(--mark); box-shadow: 0 0 0 2px var(--mark); }
 
-  #sources h2 { margin: 0 0 0.25rem; font: 700 1.1rem "Bricolage Grotesque", sans-serif; }
-  #sources ol { margin: 0; padding: 0; list-style: none; }
-  .src { display: grid; grid-template-columns: 2rem 1fr; gap: 0.5rem; padding: 0.9rem 0.6rem; border-top: 1px solid var(--line); transition: background 120ms; }
-  .src.on { background: var(--accent-soft); }
-  .src .num { font-weight: 600; color: var(--accent); }
-  .src .co { font-weight: 600; }
-  .src a { color: var(--ink); text-decoration-color: var(--line); text-underline-offset: 3px; }
-  .src a:hover { text-decoration-color: var(--accent); }
-  .src .meta { color: var(--muted); font-size: 0.85rem; }
-  .src details { margin-top: 0.3rem; font-size: 0.9rem; color: var(--muted); }
-  .src summary { cursor: pointer; color: var(--accent); }
-  .src details p { margin: 0.4rem 0 0; white-space: pre-wrap; max-height: 12rem; overflow: auto; }
+  .sources { margin: 0; padding: 0; list-style: none; }
+  .src { display: grid; grid-template-columns: 2.4rem 1fr; gap: 0.8rem; margin: 0 -0.75rem; padding: 0.95rem 0.75rem; border-radius: 10px; transition: background 120ms; }
+  .src + .src { border-top: 1px solid var(--line); border-top-left-radius: 0; border-top-right-radius: 0; }
+  .src.on { background: var(--mark-soft); }
+  .avatar { display: grid; place-items: center; width: 2.4rem; height: 2.4rem; border-radius: 9px; font: 700 0.82rem var(--display); }
+  .co { color: var(--muted); font-size: 0.86rem; }
+  .title { font-weight: 600; line-height: 1.35; color: var(--ink); text-decoration: none; }
+  a.title:hover .tt { text-decoration: underline; text-underline-offset: 3px; }
+  .tt { padding: 0 0.1em; border-radius: 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .src.on .tt { background: linear-gradient(transparent 55%, var(--mark) 55%); }
+  .nowrap { white-space: nowrap; }
+  .ext { display: inline-block; margin-left: 0.25rem; color: var(--muted); vertical-align: -1px; }
+  .score { display: inline-flex; align-items: center; gap: 0.4rem; }
+  .score .track { width: 2.2rem; height: 4px; overflow: hidden; background: #e3e9f0; border-radius: 2px; }
+  .score .track i { display: block; height: 100%; background: var(--accent); }
+  .meta { display: flex; flex-wrap: wrap; gap: 0 0.9rem; margin-top: 0.15rem; color: var(--muted); font-size: 0.82rem; }
+  .src details { margin-top: 0.35rem; font-size: 0.9rem; }
+  .src summary { display: inline-block; color: var(--accent); cursor: pointer; font-weight: 500; }
+  .src details p { margin: 0.5rem 0 0; padding-left: 0.8rem; border-left: 2px solid var(--line); color: var(--muted); white-space: pre-wrap; }
 
-  footer { margin-top: 3.5rem; max-width: 38rem; color: var(--muted); font-size: 0.85rem; }
-  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  .skeleton { display: none; }
+  .skeleton.show { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); background: var(--sheet); border: 1px solid var(--line); border-radius: 16px; }
+  .bone { height: 0.85rem; margin: 0 0 0.8rem; border-radius: 6px; background: linear-gradient(90deg, #e8edf3 25%, #f4f7fa 50%, #e8edf3 75%) 0 0 / 200% 100%; animation: shimmer 1.4s linear infinite; }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+
+  .how { margin: 4rem 0 0; padding: 2rem 0 0; border-top: 1px solid var(--line); }
+  .how h2 { margin: 0 0 1.25rem; font: 700 1.2rem var(--display); }
+  .how ol { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 2rem; margin: 0; padding: 0; list-style: none; counter-reset: step; }
+  .how li { counter-increment: step; color: var(--muted); font-size: 0.97rem; }
+  .how li::before { content: counter(step); display: grid; place-items: center; width: 1.7rem; height: 1.7rem; margin-bottom: 0.7rem; font: 700 0.85rem var(--display); color: var(--accent-ink); background: var(--accent-soft); border-radius: 50%; }
+  .how strong { display: block; margin-bottom: 0.25rem; color: var(--ink); font-weight: 600; }
+
+  footer { max-width: 70rem; margin: 3rem auto 0; padding: 1.5rem 1.25rem 3rem; color: var(--muted); font-size: 0.85rem; }
+  footer p { max-width: 42rem; margin: 0; }
+
+  @media (max-width: 54rem) {
+    .sheet.show, .skeleton.show { grid-template-columns: 1fr; }
+    .col + .col { border-left: 0; border-top: 1px solid var(--line); border-radius: 0 0 16px 16px; }
+    .col { padding: 1.4rem 1.25rem 1.5rem; }
+    .how ol { grid-template-columns: 1fr; gap: 1.5rem; }
+    .hero { padding-top: 2rem; }
+    .stick { position: static; }
+  }
+  @media (max-width: 34rem) {
+    form.search { flex-wrap: wrap; padding: 0.6rem; }
+    form.search svg { display: none; }
+    input[type="text"] { flex-basis: 100%; padding: 0.4rem 0.5rem; }
+    button.ask { width: 100%; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 </style>
 </head>
 <body>
-<main>
-  <h1>RoleStream</h1>
-  <p class="lede">Ask a question about open tech roles. Each answer cites the job postings it was written from.</p>
+<div class="wrap">
+  <header class="bar">
+    <a class="brand" href="/">
+      <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><rect x="2" y="4" width="18" height="3" rx="1.5"/><rect x="2" y="9.5" width="13" height="3" rx="1.5"/><rect x="2" y="15" width="8" height="3" rx="1.5"/><circle cx="18" cy="16.5" r="2.5"/></svg>
+      RoleStream
+    </a>
+    <a class="repo" href="https://github.com/smritisrivatsa/RoleStream" target="_blank" rel="noopener">Source on GitHub</a>
+  </header>
 
-  <form id="form">
-    <input id="q" type="text" autocomplete="off" aria-label="Your question" placeholder="Which roles mention Kubernetes?" required>
-    <button class="ask" id="go" type="submit">Ask</button>
-  </form>
-  <ul class="examples" id="examples">
-    <li><button type="button">Which roles mention Kubernetes?</button></li>
-    <li><button type="button">Compare backend roles at Stripe and ClickHouse</button></li>
-    <li><button type="button">Data engineer roles</button></li>
-  </ul>
+  <section class="hero">
+    <h1>Ask about open tech roles</h1>
+    <p class="lede">Search live job postings in plain English. Every answer cites the postings it was written from, so you can check it.</p>
+    <p class="stats" id="stats" hidden><i></i><span><b id="stats-n"></b> passages indexed from live job boards</span></p>
+
+    <form class="search" id="form">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="9" r="6"/><path d="M14 14l4 4"/></svg>
+      <input id="q" type="text" autocomplete="off" aria-label="Your question" placeholder="Which roles mention Kubernetes?" required>
+      <button class="ask" id="go" type="submit">Ask</button>
+    </form>
+    <div class="try" id="examples">
+      <span class="lead">Try</span>
+      <button type="button">Which roles mention Kubernetes?</button>
+      <button type="button">Compare backend roles at Stripe and ClickHouse</button>
+      <button type="button">Data engineer roles</button>
+    </div>
+  </section>
 
   <div id="status" role="status" aria-live="polite"></div>
+  <div class="timings" id="timings" hidden></div>
 
-  <section id="result">
-    <div id="answer"></div>
-    <aside id="sources" aria-label="Sources">
-      <h2>Sources</h2>
-      <ol id="src-list"></ol>
+  <div class="skeleton" id="skeleton" aria-hidden="true">
+    <div class="col"><div class="bone" style="width:92%"></div><div class="bone" style="width:84%"></div><div class="bone" style="width:70%"></div><div class="bone" style="width:88%"></div></div>
+    <div class="col"><div class="bone" style="width:60%"></div><div class="bone" style="width:80%"></div><div class="bone" style="width:55%"></div></div>
+  </div>
+
+  <section class="sheet" id="result">
+    <div class="col">
+      <div class="stick">
+        <h2>Answer</h2>
+        <div id="answer"></div>
+      </div>
+    </div>
+    <aside class="col" aria-label="Sources">
+      <h2 id="src-title">Sources</h2>
+      <p class="hint">Hover a number in the answer to highlight its source.</p>
+      <ol class="sources" id="src-list"></ol>
     </aside>
   </section>
 
-  <footer>A small local model (llama3.2, 3B) writes the answer from the postings listed under Sources. It can still get details wrong, so check the posting before you rely on it.</footer>
-</main>
+  <section class="how">
+    <h2>How an answer is made</h2>
+    <ol>
+      <li><strong>Postings stream in</strong>Pollers read Greenhouse, Lever and Ashby into Postgres. Debezium and Kafka carry every change to the indexer.</li>
+      <li><strong>Your question is matched</strong>Postings are split into chunks and stored in Qdrant. A question runs a meaning search and a keyword search together.</li>
+      <li><strong>A model writes the reply</strong>A local 3B model answers from the best matches only, and cites each one.</li>
+    </ol>
+  </section>
+</div>
+
+<footer>
+  <p>The answer comes from a small local model (llama3.2, 3B) and can still get details wrong. Open the posting before you rely on it.</p>
+</footer>
 
 <script>
 const $ = (id) => document.getElementById(id);
 const form = $("form"), input = $("q"), go = $("go"), status = $("status");
-const result = $("result"), answer = $("answer"), list = $("src-list");
+const result = $("result"), skeleton = $("skeleton"), answer = $("answer"), list = $("src-list");
+
+const TINTS = [["#dff0f4","#06485a"],["#e6e9fb","#2b3a8f"],["#e9f3df","#3b5c1c"],["#fbe9df","#8a3d12"],["#f1e4f4","#6a2d78"],["#e4eef7","#1f4d7a"]];
+function tint(name) { let h = 0; for (const c of name) h = (h * 31 + c.charCodeAt(0)) >>> 0; return TINTS[h % TINTS.length]; }
 
 function setActive(ref, on) {
   document.querySelectorAll(`[data-ref="${ref}"]`).forEach((el) => el.classList.toggle("on", on));
 }
 
-function renderAnswer(text) {
-  answer.textContent = "";
-  text.split(/(\[\d+\])/).forEach((part) => {
+function addInline(parent, text) {
+  text.split(/(\[\d+\]|\[[^\]]*[A-Za-z][^\]]*\])/).forEach((part) => {
     const m = part.match(/^\[(\d+)\]$/);
-    if (!m) { answer.append(part); return; }
+    if (!m) {
+      const cav = part.match(/^\[([^\]]*[A-Za-z][^\]]*)\]$/);
+      if (cav) {
+        const c = document.createElement("span");
+        c.className = "caveat"; c.textContent = cav[1];
+        parent.append(c);
+      } else if (part) { parent.append(part); }
+      return;
+    }
     const b = document.createElement("button");
     b.type = "button"; b.className = "cite"; b.dataset.ref = m[1]; b.textContent = m[1];
     b.setAttribute("aria-label", `Source ${m[1]}`);
@@ -144,30 +266,93 @@ function renderAnswer(text) {
       row.scrollIntoView({ block: "nearest", behavior: "smooth" });
       row.querySelector("details").open = true;
     });
-    answer.append(b);
+    parent.append(b);
   });
 }
 
+function renderAnswer(text, companies) {
+  answer.textContent = "";
+  const names = [...new Set(companies.filter(Boolean))].sort((a, b) => b.length - a.length);
+  let ul = null;
+  text.split("\n").forEach((raw) => {
+    const line = raw.trim();
+    if (!line) { ul = null; return; }
+    const bullet = line.match(/^[-*•]\s*(.+)$/);
+    if (bullet) {
+      if (!ul) { ul = document.createElement("ul"); answer.append(ul); }
+      const li = document.createElement("li");
+      const body = bullet[1];
+      const hit = names.find((n) => body.toLowerCase().startsWith(n.toLowerCase()));
+      if (hit) {
+        const who = document.createElement("span");
+        who.className = "who"; who.textContent = body.slice(0, hit.length);
+        const dash = document.createElement("span");
+        dash.className = "dash"; dash.textContent = "\u2013";
+        li.append(who, " ", dash, " ");
+        addInline(li, body.slice(hit.length).replace(/^\s*[-\u2013\u2014:]\s*/, ""));
+      } else {
+        addInline(li, body);
+      }
+      ul.append(li);
+    } else {
+      ul = null;
+      const p = document.createElement("p");
+      addInline(p, line);
+      answer.append(p);
+    }
+  });
+}
+
+const EXT = '<svg class="ext" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4.5 2H2.5A.5.5 0 0 0 2 2.5v7a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V7.5M7 2h3v3M10 2L5.5 6.5"/></svg>';
+
 function renderSources(sources) {
   list.textContent = "";
+  $("src-title").textContent = sources.length ? `Sources (${sources.length})` : "Sources";
   sources.forEach((s) => {
     const li = document.createElement("li");
     li.className = "src"; li.dataset.ref = s.ref;
     li.addEventListener("mouseenter", () => setActive(s.ref, true));
     li.addEventListener("mouseleave", () => setActive(s.ref, false));
 
-    const num = document.createElement("div");
-    num.className = "num"; num.textContent = s.ref;
+    const name = s.company || "Unknown";
+    const [bg, fg] = tint(name);
+    const av = document.createElement("div");
+    av.className = "avatar"; av.textContent = name.slice(0, 2); av.style.background = bg; av.style.color = fg;
+    av.setAttribute("aria-hidden", "true");
 
     const body = document.createElement("div");
     const co = document.createElement("div");
-    co.className = "co"; co.textContent = s.company || "Unknown company";
-    const title = document.createElement(s.url ? "a" : "span");
-    title.textContent = s.title || "Untitled role";
-    if (s.url) { title.href = s.url; title.target = "_blank"; title.rel = "noopener"; }
+    co.className = "co"; co.textContent = `${s.ref}. ${name}`;
+    const title = document.createElement(s.url ? "a" : "div");
+    title.className = "title";
+    const full = s.title || "Untitled role";
+    const cut = full.lastIndexOf(" ");
+    const head = cut > 0 ? full.slice(0, cut + 1) : "";
+    const last = cut > 0 ? full.slice(cut + 1) : full;
+    const tt = document.createElement("span");
+    tt.className = "tt"; tt.textContent = head;
+    const tail = document.createElement("span");
+    tail.className = "nowrap";
+    const tl = document.createElement("span");
+    tl.className = "tt"; tl.textContent = last;
+    tail.append(tl);
+    if (s.url) { title.href = s.url; title.target = "_blank"; title.rel = "noopener"; tail.insertAdjacentHTML("beforeend", EXT); }
+    title.append(tt, tail);
+
     const meta = document.createElement("div");
     meta.className = "meta";
-    meta.textContent = [s.section, `match ${s.score}`].filter(Boolean).join(", ");
+    if (s.section) { const a = document.createElement("span"); a.textContent = s.section; meta.append(a); }
+    const sc = document.createElement("span");
+    sc.className = "score";
+    sc.title = "Match score from hybrid search. Higher means closer to your question.";
+    const track = document.createElement("span");
+    track.className = "track";
+    const fill = document.createElement("i");
+    fill.style.width = `${Math.max(4, Math.min(100, Number(s.score) * 100))}%`;
+    track.append(fill);
+    sc.append(track, Number(s.score).toFixed(2));
+    meta.append(sc);
+
     const det = document.createElement("details");
     const sum = document.createElement("summary");
     sum.textContent = "Show passage";
@@ -176,20 +361,38 @@ function renderSources(sources) {
     det.append(sum, p);
 
     body.append(co, title, meta, det);
-    li.append(num, body);
+    li.append(av, body);
     list.append(li);
   });
 }
 
+function renderTimings(t) {
+  const box = $("timings");
+  box.textContent = "";
+  if (!t) { box.hidden = true; return; }
+  [["embedding", "Embedding"], ["retrieval", "Retrieval"], ["generation", "Answer"]].forEach(([k, label]) => {
+    if (typeof t[k] !== "number") return;
+    const sp = document.createElement("span");
+    const b = document.createElement("b");
+    b.textContent = `${t[k].toFixed(1)} s`;
+    sp.append(`${label} `, b);
+    box.append(sp);
+  });
+  box.hidden = !box.children.length;
+}
+
 async function ask(question) {
+  document.body.classList.add("searched");
+  $("timings").hidden = true;
   go.disabled = true;
   result.classList.remove("show");
+  skeleton.classList.add("show");
   status.className = "";
   const t0 = performance.now();
   const tick = setInterval(() => {
-    status.textContent = `Reading postings and writing an answer… ${Math.round((performance.now() - t0) / 1000)} s`;
+    status.textContent = `Reading postings and writing an answer, usually about 10 s. ${Math.round((performance.now() - t0) / 1000)} s so far.`;
   }, 500);
-  status.textContent = "Reading postings and writing an answer… 0 s";
+  status.textContent = "Reading postings and writing an answer, usually about 10 s. 0 s so far.";
   try {
     const res = await fetch("/query", {
       method: "POST",
@@ -204,15 +407,18 @@ async function ask(question) {
         : `The API returned an error (${res.status}). ${detail}`);
     }
     const data = await res.json();
-    renderAnswer(data.answer);
+    renderAnswer(data.answer, data.sources.map((s) => s.company));
     renderSources(data.sources);
+    renderTimings(data.timings);
+    skeleton.classList.remove("show");
     result.classList.add("show");
     const secs = ((performance.now() - t0) / 1000).toFixed(1);
     const n = data.sources.length;
     status.textContent = n
       ? `Answered in ${secs} s from ${n} posting${n === 1 ? "" : "s"}.`
-      : `No postings matched. Try different words.`;
+      : "No postings matched. Try different words.";
   } catch (err) {
+    skeleton.classList.remove("show");
     status.className = "error";
     status.textContent = err instanceof TypeError
       ? "Can't reach the API at this address. Check that uvicorn is running on port 8000."
@@ -222,6 +428,16 @@ async function ask(question) {
     go.disabled = false;
   }
 }
+
+fetch("/stats").then((r) => (r.ok ? r.json() : null)).then((d) => {
+  if (d && d.passages) { $("stats-n").textContent = d.passages.toLocaleString(); $("stats").hidden = false; }
+}).catch(() => {});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "/" && document.activeElement !== input && !e.metaKey && !e.ctrlKey && !e.altKey) {
+    e.preventDefault(); input.focus();
+  }
+});
 
 form.addEventListener("submit", (e) => { e.preventDefault(); const q = input.value.trim(); if (q) ask(q); });
 $("examples").addEventListener("click", (e) => {
