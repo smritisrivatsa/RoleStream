@@ -1,7 +1,11 @@
 import math
 import re
+import time
+
 import requests
 from fastapi import FastAPI, HTTPException
+from prometheus_client import Counter, Histogram
+from prometheus_fastapi_instrumentator import Instrumentator
 from pydantic import BaseModel
 
 EMBED_URL = "http://localhost:8001/embed"
@@ -69,6 +73,19 @@ FILLER_WORDS = {
 }
 
 app = FastAPI(title="RoleStream")
+
+Instrumentator().instrument(app).expose(app, endpoint="/metrics")
+
+STAGE_LATENCY = Histogram(
+    "rolestream_stage_seconds",
+    "Time spent per pipeline stage",
+    ["stage"],
+    buckets=(0.05, 0.1, 0.25, 0.5, 1, 2, 5, 10, 20, 40),
+)
+EMPTY_RETRIEVALS = Counter(
+    "rolestream_empty_retrievals_total",
+    "Queries where no chunk cleared MIN_SCORE",
+)
 
 
 class Query(BaseModel):
@@ -210,11 +227,22 @@ def generate(question: str, hits: list[dict]) -> str:
 def query(q: Query):
     try:
         companies = [q.company] if q.company else extract_companies(q.question)
+
+        t = time.perf_counter()
         dense_vec, sparse_vec = embed(rewrite_query(q.question))
+        STAGE_LATENCY.labels("embedding").observe(time.perf_counter() - t)
+
+        t = time.perf_counter()
         hits = retrieve(dense_vec, sparse_vec, q.top_k, companies)
+        STAGE_LATENCY.labels("retrieval").observe(time.perf_counter() - t)
+
         if not hits:
+            EMPTY_RETRIEVALS.inc()
             return {"answer": "No matching postings found.", "sources": []}
+
+        t = time.perf_counter()
         answer = generate(q.question, hits)
+        STAGE_LATENCY.labels("generation").observe(time.perf_counter() - t)
     except requests.RequestException as e:
         raise HTTPException(status_code=502, detail=str(e))
     sources = [
