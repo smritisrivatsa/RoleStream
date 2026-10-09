@@ -6,6 +6,12 @@ services:
     ports:
       - "9090:9090"
 
+  kafka-exporter:
+    image: danielqsj/kafka-exporter:v1.8.0
+    command: ["--kafka.server=kafka:29092"]
+    depends_on:
+      - kafka
+
   grafana:
     image: grafana/grafana:11.2.0
     volumes:

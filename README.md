@@ -112,6 +112,10 @@ Grafana is at `localhost:3000` (admin / admin) and Prometheus at `localhost:9090
 
 `docs/load_test.py` sends 30 questions one at a time after a warm-up request, so model loading doesn't count. On my M1 MacBook I ran it twice: all 60 requests succeeded, with p50 9.2 s both times, p95 17.3 s and 17.5 s, and a max of 27.8 s and 21.1 s. Nearly all of that is generation with the 3B model; retrieval stays well under a second. I only tested one request at a time because Ollama runs one generation at a time here, so concurrent requests would mostly queue. Going faster means a smaller or quantized model, streaming the answer token by token, or a GPU box, not tuning the pipeline around it.
 
+### Consumer lag
+
+The same dashboard shows how far the Go consumer is behind Kafka, using a `kafka-exporter` container that reads the consumer group's lag from the broker. In steady state the lag sits at 0. After a Greenhouse poll that produced about 2,900 change events, the consumer took under 15 minutes to drain the backlog, so ingest runs at roughly 3 events per second or better on my laptop. Each event goes through chunking and the CPU embedding service, so that is the bottleneck of the pipeline, not Kafka. I checked that ingesting those events didn't create duplicate chunks: the collection went from 44,577 chunks over 5,831 open postings to 50,986 over 6,610, which is about 7.7 chunks per posting both times.
+
 ## Known limitations
 
 - **Short ambiguous words break retrieval.** Searching for "Go" matches the word "Go-To-Market" in a pile of sales postings, and the 3B model then happily lists them as Go jobs. Neither the dense model nor BM25 can tell the language from the word. Searching "Golang" works better. I left this alone instead of special-casing one token.
@@ -127,7 +131,6 @@ Grafana is at `localhost:3000` (admin / admin) and Prometheus at `localhost:9090
 - Add recall@5 on a hand-labeled set of questions, so retrieval has a deterministic metric that doesn't depend on a judge model.
 - A cross-encoder reranker over the top 20 hybrid results, to cut down on weak chunks in the context.
 - Try a larger generator (8B local, or Haiku) and compare against the 3B model.
-- Consumer lag metrics from the Go consumer, so the whole pipeline is on the dashboard, not just the API.
 - A simple web frontend and a demo video.
 
 Relevancy is the number I most want to move. It's 0.668 overall and 0.773 on answerable questions, and my target is 0.80 on the answerable set. I expect the reranker and a better model to matter more than further prompt changes.
