@@ -1,3 +1,4 @@
+import json
 import math
 import os
 import re
@@ -7,7 +8,7 @@ from pathlib import Path
 import anthropic
 import requests
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from prometheus_client import Counter, Histogram
 from prometheus_fastapi_instrumentator import Instrumentator
 from pydantic import BaseModel
@@ -223,6 +224,21 @@ def build_prompt(question: str, hits: list[dict]) -> str:
     return f"Context:\n{context}\n\nQuestion: {question}"
 
 
+def format_sources(hits: list[dict]) -> list[dict]:
+    return [
+        {
+            "ref": i,
+            "company": h["payload"].get("company"),
+            "title": h["payload"].get("title"),
+            "url": h["payload"].get("url"),
+            "section": h["payload"].get("section"),
+            "text": h["payload"].get("text"),
+            "score": round(h["score"], 3),
+        }
+        for i, h in enumerate(hits, 1)
+    ]
+
+
 def generate_ollama(question: str, hits: list[dict]) -> str:
     r = requests.post(
         OLLAMA_URL,
@@ -241,14 +257,20 @@ def generate_ollama(question: str, hits: list[dict]) -> str:
     return r.json()["message"]["content"]
 
 
-def generate_claude(question: str, hits: list[dict]) -> str:
-    global _claude_client, _claude_calls
-    if _claude_calls >= CLAUDE_MAX_CALLS:
-        raise RuntimeError(f"Claude call cap reached ({CLAUDE_MAX_CALLS})")
+def _get_claude_client():
+    global _claude_client
     if _claude_client is None:
         _claude_client = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY
+    return _claude_client
+
+
+def generate_claude(question: str, hits: list[dict]) -> str:
+    global _claude_calls
+    if _claude_calls >= CLAUDE_MAX_CALLS:
+        raise RuntimeError(f"Claude call cap reached ({CLAUDE_MAX_CALLS})")
+    client = _get_claude_client()
     _claude_calls += 1
-    msg = _claude_client.messages.create(
+    msg = client.messages.create(
         model=CLAUDE_MODEL,
         max_tokens=600,
         system=SYSTEM,
@@ -267,6 +289,66 @@ def generate(question: str, hits: list[dict]) -> str:
                 raise
             print(f"Claude failed ({e}); falling back to Ollama")
     return generate_ollama(question, hits)
+
+
+def stream_ollama(question: str, hits: list[dict]):
+    """Yield the answer from Ollama piece by piece."""
+    with requests.post(
+        OLLAMA_URL,
+        json={
+            "model": MODEL,
+            "stream": True,
+            "keep_alive": "1h",
+            "messages": [
+                {"role": "system", "content": SYSTEM},
+                {"role": "user", "content": build_prompt(question, hits)},
+            ],
+        },
+        stream=True,
+        timeout=300,
+    ) as r:
+        r.raise_for_status()
+        for line in r.iter_lines():
+            if not line:
+                continue
+            piece = json.loads(line).get("message", {}).get("content", "")
+            if piece:
+                yield piece
+
+
+def stream_claude(question: str, hits: list[dict]):
+    """Yield the answer from Claude piece by piece."""
+    global _claude_calls
+    if _claude_calls >= CLAUDE_MAX_CALLS:
+        raise RuntimeError(f"Claude call cap reached ({CLAUDE_MAX_CALLS})")
+    client = _get_claude_client()
+    _claude_calls += 1
+    with client.messages.stream(
+        model=CLAUDE_MODEL,
+        max_tokens=600,
+        system=SYSTEM,
+        messages=[{"role": "user", "content": build_prompt(question, hits)}],
+        timeout=60,
+    ) as stream:
+        for text in stream.text_stream:
+            yield text
+
+
+def stream_answer(question: str, hits: list[dict]):
+    """Use the chosen generator. Fall back to Ollama only if fallback is on
+    and Claude failed before sending any text."""
+    if GENERATOR == "claude":
+        started = False
+        try:
+            for piece in stream_claude(question, hits):
+                started = True
+                yield piece
+            return
+        except Exception as e:
+            if started or not CLAUDE_FALLBACK:
+                raise
+            print(f"Claude failed ({e}); falling back to Ollama")
+    yield from stream_ollama(question, hits)
 
 
 STATIC_DIR = Path(__file__).parent / "static"
@@ -313,16 +395,62 @@ def query(q: Query):
         STAGE_LATENCY.labels("generation").observe(timings["generation"])
     except (requests.RequestException, anthropic.APIError, RuntimeError) as e:
         raise HTTPException(status_code=502, detail=str(e))
-    sources = [
-        {
-            "ref": i,
-            "company": h["payload"].get("company"),
-            "title": h["payload"].get("title"),
-            "url": h["payload"].get("url"),
-            "section": h["payload"].get("section"),
-            "text": h["payload"].get("text"),
-            "score": round(h["score"], 3),
-        }
-        for i, h in enumerate(hits, 1)
-    ]
-    return {"answer": answer, "sources": sources, "timings": timings, "generator": GENERATOR}
+    return {
+        "answer": answer,
+        "sources": format_sources(hits),
+        "timings": timings,
+        "generator": GENERATOR,
+    }
+
+
+def _line(obj: dict) -> str:
+    return json.dumps(obj) + "\n"
+
+
+@app.post("/query/stream")
+def query_stream(q: Query):
+    """Same pipeline as /query, but sends newline-delimited JSON events:
+    sources first, then the answer text in pieces, then a final done event."""
+    try:
+        companies = [q.company] if q.company else extract_companies(q.question)
+        timings = {}
+
+        t = time.perf_counter()
+        dense_vec, sparse_vec = embed(rewrite_query(q.question))
+        timings["embedding"] = time.perf_counter() - t
+        STAGE_LATENCY.labels("embedding").observe(timings["embedding"])
+
+        t = time.perf_counter()
+        hits = retrieve(dense_vec, sparse_vec, q.top_k, companies)
+        timings["retrieval"] = time.perf_counter() - t
+        STAGE_LATENCY.labels("retrieval").observe(timings["retrieval"])
+    except requests.RequestException as e:
+        raise HTTPException(status_code=502, detail=str(e))
+
+    def events():
+        if not hits:
+            EMPTY_RETRIEVALS.inc()
+            yield _line({"type": "sources", "sources": [], "timings": timings, "generator": GENERATOR})
+            yield _line({"type": "done", "timings": timings})
+            return
+
+        yield _line({
+            "type": "sources",
+            "sources": format_sources(hits),
+            "timings": timings,
+            "generator": GENERATOR,
+        })
+
+        t = time.perf_counter()
+        try:
+            for piece in stream_answer(q.question, hits):
+                yield _line({"type": "token", "text": piece})
+        except (requests.RequestException, anthropic.APIError, RuntimeError) as e:
+            yield _line({"type": "error", "detail": str(e)})
+            return
+
+        timings["generation"] = time.perf_counter() - t
+        STAGE_LATENCY.labels("generation").observe(timings["generation"])
+        yield _line({"type": "done", "timings": timings})
+
+    return StreamingResponse(events(), media_type="application/x-ndjson")
