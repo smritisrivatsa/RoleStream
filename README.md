@@ -4,6 +4,8 @@ RoleStream is a search and Q&A system over live job postings. It pulls openings 
 
 I built it solo, mostly to learn how a streaming pipeline and a RAG system fit together, and to find out how bad retrieval gets when the data is messy real-world job text. The answer turned out to be "bad in specific, fixable ways", which is most of what the rest of this README is about.
 
+![RoleStream answering "Which roles mention React?" with cited sources](docs/demo.png)
+
 ## How it works
 
 ```
