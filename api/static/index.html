@@ -275,7 +275,8 @@ function renderAnswer(text, companies) {
   const names = [...new Set(companies.filter(Boolean))].sort((a, b) => b.length - a.length);
   let ul = null;
   text.split("\n").forEach((raw) => {
-    const line = raw.trim();
+    // The model sometimes emits markdown bold (**text**); render it as plain text.
+    const line = raw.replace(/\*\*([^*]+)\*\*/g, "$1").replace(/__([^_]+)__/g, "$1").trim();
     if (!line) { ul = null; return; }
     const bullet = line.match(/^[-*•]\s*(.+)$/);
     if (bullet) {
@@ -289,7 +290,7 @@ function renderAnswer(text, companies) {
         const dash = document.createElement("span");
         dash.className = "dash"; dash.textContent = "\u2013";
         li.append(who, " ", dash, " ");
-        addInline(li, body.slice(hit.length).replace(/^\s*[-\u2013\u2014:]\s*/, ""));
+        addInline(li, body.slice(hit.length).replace(/^\s*[-\u2013\u2014:,]\s*/, ""));
       } else {
         addInline(li, body);
       }
