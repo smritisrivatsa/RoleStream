@@ -17,20 +17,20 @@ Greenhouse / Lever / Ashby APIs
                       |
               Go consumer (chunking)
                       |
-              embedding service  -->  Qdrant (44,577 chunks)
+              embedding service  -->  Qdrant (50,986 chunks)
                                           |
                           FastAPI /query (hybrid retrieval)
                                           |
-                                Ollama, llama3.2:3b
+                    Ollama (llama3.2:3b) or Claude
 ```
 
 - **Pollers** (Python) hit the three job board APIs and write postings to Postgres.
 - **Debezium** watches Postgres and publishes row changes to Kafka, so nothing downstream has to poll the database.
 - **The Go consumer** reads the topic, splits each posting into chunks, and sends them to the embedding service.
 - **The embedding service** produces a dense vector (`all-MiniLM-L6-v2`) and a sparse BM25 vector (fastembed) for each chunk. Both go into Qdrant.
-- **The API** embeds the question, runs a hybrid search in Qdrant (dense and sparse results merged with reciprocal rank fusion), and hands the top chunks to a local `llama3.2:3b` model through Ollama. The model is told to answer only from those chunks and cite them.
+- **The API** embeds the question, runs a hybrid search in Qdrant (dense and sparse results merged with reciprocal rank fusion), and hands the top chunks to a local `llama3.2:3b` model through Ollama, or to Claude if `GENERATOR=claude` is set. The model is told to answer only from those chunks and cite them.
 
-Everything runs locally. Postgres, Kafka, Debezium and Qdrant are in `docker-compose.yml`. The embedding service, Ollama and the API run directly on the machine.
+Everything runs locally unless you switch the generator to Claude. Postgres, Kafka, Debezium and Qdrant are in `docker-compose.yml`. The embedding service, Ollama and the API run directly on the machine.
 
 ## Running it
 
@@ -61,7 +61,18 @@ curl -s -X POST localhost:8000/query \
   -d '{"question": "Which roles mention Kubernetes?"}'
 ```
 
-The first request after starting Ollama is slow because the model has to load. After that it's a few seconds per question.
+You can also open `localhost:8000` in a browser. The page shows the answer next to its source postings, with each citation linked to the passage it came from, and the time spent in each stage.
+
+The first request after starting Ollama is slow because the model has to load. After that it takes roughly 10 to 20 seconds per question with the local model.
+
+To use Claude as the generator instead, set your key in the environment (keep it out of the repo) and start the API with:
+
+```bash
+export ANTHROPIC_API_KEY=...   # read from a file outside the repo, never committed
+cd api && GENERATOR=claude uvicorn main:app --port 8000
+```
+
+That takes about 4 seconds per question. `CLAUDE_MODEL` picks the model (default `claude-sonnet-5-5`), `CLAUDE_MAX_CALLS` caps API calls per server run (default 300), and `CLAUDE_FALLBACK=1` falls back to Ollama if a Claude call fails. Fallback is off by default so a benchmark can't silently mix the two generators.
 
 ## Evaluating it
 
@@ -76,13 +87,30 @@ I wrote 55 questions (`docs/run_golden_questions.py`) covering language and tool
 | Prompt fix: removed an example the model was copying | 0.789 | 0.681 |
 | Same run, answerable questions only (n=42) | 0.785 | 0.733 |
 
-All three rows after the first are n=55 with nothing dropped. Judge noise on a run like this is around 0.03, so the faithfulness gain from the last change is within noise. The relevancy gain (+0.09) is not.
+All rows after the first are n=55 with nothing dropped. Judge noise on a run like this is around 0.03, so the faithfulness gain from the last change is within noise. The relevancy gain (+0.09) is not.
 
 The latest run, after the prompt fix, is flat within noise: faithfulness 0.789 against 0.805 and relevancy 0.681 against 0.668. That change targeted one specific failure, a company name the model copied from an example in my own prompt, and an average over 55 questions barely registers a fix like that. I checked it by testing instead. Generation on this run took a median of 11.3 s and 18.5 s at p95 (max 27.6 s) per question on the local 3B model.
 
-13 of the 55 questions are ones where the right answer is a refusal: 7 ask about roles that don't exist (COBOL, Fortran, a "Time Travel Consultant") and 6 ask about posting dates the data doesn't have. Those answers score well on faithfulness (roughly 0.88) but badly on relevancy (roughly 0.33), because the judge doesn't reward "that isn't in the data" as an on-topic answer. That's why the last row exists: on the 42 answerable questions, relevancy is 0.773 and faithfulness is 0.781. The `docs/split_scores.py` script reproduces both views.
+13 of the 55 questions are ones where the right answer is a refusal: 7 ask about roles that don't exist (COBOL, Fortran, a "Time Travel Consultant") and 6 ask about posting dates the data doesn't have. Those answers score well on faithfulness (roughly 0.88) but badly on relevancy (roughly 0.33), because the judge doesn't reward "that isn't in the data" as an on-topic answer. That's why the answerable-only rows exist: on the 42 answerable questions the latest run scores 0.733 relevancy and 0.785 faithfulness. The `docs/split_scores.py` script reproduces both views.
 
 I read all 13 refusal answers by hand on the latest run. 12 are correct. The other one, for "Which companies have posted the most new roles this month?", claimed Anthropic had posted a new role this month based on a location string in a chunk, instead of saying dates aren't available. The script's phrase-based refusal check counts that answer as a refusal, so its 13 of 13 is an upper bound.
+
+### Local model vs Claude
+
+The generator is switchable (`GENERATOR=ollama|claude`, local by default). Retrieval is identical for both, so any difference comes from the model that writes the answer. I ran the same 55 questions through each and scored them the same way (n=55, nothing dropped for either).
+
+| Generator | Faithfulness | Answer relevancy | Generation p50 / p95 |
+|---|---|---|---|
+| llama3.2:3b (local) | 0.789 | 0.681 | 11.3 s / 18.5 s |
+| Claude Sonnet 5.5 | 0.864 | 0.257 | 3.7 s / 5.0 s |
+
+On the 42 answerable questions the scores are 0.785 faithfulness and 0.733 relevancy for the local model, and 0.870 and 0.337 for Claude.
+
+Claude is more faithful (+0.075, more than the roughly 0.03 judge noise) and about three times faster. Relevancy fell from 0.681 to 0.257, but I don't read that as worse answers. 37 of Claude's 55 answers scored exactly 0 on relevancy, against 10 of the local model's, and its answers are much longer (median 685 characters against 154). The lowest-scoring ones are careful: it says the postings show responsibilities and not a formal requirements list, or that a $190,000 to $230,000 range straddles $200k so it can't confirm. My system prompt tells the model to say it can only confirm what is in the retrieved sample. The 3B model mostly ignores that rule and Claude follows it closely. The relevancy metric appears to score hedged answers as 0, which fits the pattern, though I haven't confirmed that inside RAGAS. On this prompt, relevancy is not a fair comparison between the two models.
+
+I read the opening of all 13 refusal answers from Claude by hand: 13 of 13 are correct, including the date question the local model got wrong.
+
+Two caveats. The judge is Claude Haiku and the generator is Claude Sonnet 5.5, so faithfulness may be inflated by self-preference even though they are different models. And each number comes from one run. The next experiment is to soften the prompt so Claude only adds the "I only see a sample" caveat on questions about whether something exists.
 
 **Retrieval check.** RAGAS depends on a judge model, so I also measure retrieval directly. For 12 questions I defined the true postings with a SQL query against Postgres (a keyword in the description, or a phrase in the title) and checked how many of the 5 retrieved postings are in that set. Mean precision@5 is 0.88, against roughly 0.04 for picking postings at random from the 6,610 open ones, and 11 of the 12 questions returned at least one correct posting. Retrieval is deterministic, so this reproduces exactly (`docs/eval_retrieval.py`). The weak spots are "data engineer" (3 of 5, and the label only counts exact title matches, so related roles like Analytics Engineer count as misses) and "Go" (0 of 5, the one question with no correct posting in the top 5, for the reasons in the limitations section). The labels are keyword matches, so a posting that mentions Kubernetes only in a nice-to-have list still counts.
 
@@ -116,7 +144,7 @@ Grafana is at `localhost:3000` (admin / admin) and Prometheus at `localhost:9090
 
 ![Grafana dashboard during a load test](docs/grafana-dashboard.png)
 
-`docs/load_test.py` sends 30 questions one at a time after a warm-up request, so model loading doesn't count. On my M1 MacBook I ran it twice: all 60 requests succeeded, with p50 9.2 s both times, p95 17.3 s and 17.5 s, and a max of 27.8 s and 21.1 s. Nearly all of that is generation with the 3B model; retrieval stays well under a second. I only tested one request at a time because Ollama runs one generation at a time here, so concurrent requests would mostly queue. Going faster means a smaller or quantized model, streaming the answer token by token, or a GPU box, not tuning the pipeline around it.
+`docs/load_test.py` sends 30 questions one at a time after a warm-up request, so model loading doesn't count. On my M1 MacBook I ran it twice against the local model: all 60 requests succeeded, with p50 9.2 s both times, p95 17.3 s and 17.5 s, and a max of 27.8 s and 21.1 s. Nearly all of that is generation with the 3B model; retrieval stays well under a second. I only tested one request at a time because Ollama runs one generation at a time here, so concurrent requests would mostly queue. Going faster means a smaller or quantized model, streaming the answer token by token, or a GPU box, not tuning the pipeline around it.
 
 ### Consumer lag
 
@@ -133,13 +161,14 @@ The same dashboard shows how far the Go consumer is behind Kafka, using a `kafka
 
 ## What's next
 
-- Check the refusal answers by hand and report refusal accuracy as its own number.
-- Add recall@5 on a hand-labeled set of questions, so retrieval has a deterministic metric that doesn't depend on a judge model.
+- Stream the answer, so the sources appear immediately and the text types out as it's generated.
+- Soften the prompt for Claude so it only adds the "I only see a sample" caveat on existence questions, then rerun to see whether relevancy recovers.
 - A cross-encoder reranker over the top 20 hybrid results, to cut down on weak chunks in the context.
-- Try a larger generator (8B local, or Haiku) and compare against the 3B model.
-- A simple web frontend and a demo video.
+- Try an 8B local model, to see how close it gets to Claude.
+- A held-out question set, so I'm not scoring on the questions I tuned on.
+- A demo video.
 
-Relevancy is the number I most want to move. It's 0.681 overall and 0.733 on answerable questions, and my target is 0.80 on the answerable set. I expect the reranker and a better model to matter more than further prompt changes.
+Faithfulness is the number I trust most for comparing generators. Relevancy is the one I most want to move, but the Claude run showed it also depends on how much a model hedges, so I'd fix the prompt before reading much into it. My target is 0.80 on the answerable set for the local model.
 
 ## Layout
 
@@ -147,8 +176,9 @@ Relevancy is the number I most want to move. It's 0.681 overall and 0.733 on ans
 pollers/      Greenhouse, Lever and Ashby pollers
 consumer/     Go Kafka consumer and chunker
 embedding/    dense + sparse embedding service
-api/          FastAPI service (retrieval, query rewriting, generation)
+api/          FastAPI service and web page (retrieval, query rewriting, generation)
 debezium/     connector config
 schema/       Postgres schema
 docs/         golden questions, RAGAS scripts, saved results
+monitoring/   Prometheus and Grafana config
 ```
