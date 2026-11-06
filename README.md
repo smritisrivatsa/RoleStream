@@ -73,12 +73,18 @@ I wrote 55 questions (`docs/run_golden_questions.py`) covering language and tool
 | After adding the "no dates in the data" rule | 0.789 | 0.578 |
 | Cross-company retrieval + query rewriter | **0.805** | **0.668** |
 | Same run, answerable questions only (n=42) | 0.781 | 0.773 |
+| Prompt fix: removed an example the model was copying | 0.789 | 0.681 |
+| Same run, answerable questions only (n=42) | 0.785 | 0.733 |
 
 All three rows after the first are n=55 with nothing dropped. Judge noise on a run like this is around 0.03, so the faithfulness gain from the last change is within noise. The relevancy gain (+0.09) is not.
 
+The latest run, after the prompt fix, is flat within noise: faithfulness 0.789 against 0.805 and relevancy 0.681 against 0.668. That change targeted one specific failure, a company name the model copied from an example in my own prompt, and an average over 55 questions barely registers a fix like that. I checked it by testing instead. Generation on this run took a median of 11.3 s and 18.5 s at p95 (max 27.6 s) per question on the local 3B model.
+
 13 of the 55 questions are ones where the right answer is a refusal: 7 ask about roles that don't exist (COBOL, Fortran, a "Time Travel Consultant") and 6 ask about posting dates the data doesn't have. Those answers score well on faithfulness (roughly 0.88) but badly on relevancy (roughly 0.33), because the judge doesn't reward "that isn't in the data" as an on-topic answer. That's why the last row exists: on the 42 answerable questions, relevancy is 0.773 and faithfulness is 0.781. The `docs/split_scores.py` script reproduces both views.
 
-**Retrieval check.** RAGAS depends on a judge model, so I also measure retrieval directly. For 12 questions I defined the true postings with a SQL query against Postgres (a keyword in the description, or a phrase in the title) and checked how many of the 5 retrieved postings are in that set. Mean precision@5 is 0.88, against roughly 0.05 for picking postings at random from the 5,831 open ones, and every question returned at least one correct posting. Retrieval is deterministic, so this reproduces exactly (`docs/eval_retrieval.py`). The weak spots are "data engineer" (2 of 5, and the label only counts exact title matches, so related roles like Analytics Engineer count as misses) and "Go" (1 of 5, for the reasons in the limitations section). The labels are keyword matches, so a posting that mentions Kubernetes only in a nice-to-have list still counts.
+I read all 13 refusal answers by hand on the latest run. 12 are correct. The other one, for "Which companies have posted the most new roles this month?", claimed Anthropic had posted a new role this month based on a location string in a chunk, instead of saying dates aren't available. The script's phrase-based refusal check counts that answer as a refusal, so its 13 of 13 is an upper bound.
+
+**Retrieval check.** RAGAS depends on a judge model, so I also measure retrieval directly. For 12 questions I defined the true postings with a SQL query against Postgres (a keyword in the description, or a phrase in the title) and checked how many of the 5 retrieved postings are in that set. Mean precision@5 is 0.88, against roughly 0.04 for picking postings at random from the 6,610 open ones, and 11 of the 12 questions returned at least one correct posting. Retrieval is deterministic, so this reproduces exactly (`docs/eval_retrieval.py`). The weak spots are "data engineer" (3 of 5, and the label only counts exact title matches, so related roles like Analytics Engineer count as misses) and "Go" (0 of 5, the one question with no correct posting in the top 5, for the reasons in the limitations section). The labels are keyword matches, so a posting that mentions Kubernetes only in a nice-to-have list still counts.
 
 I also track context precision, but I don't trust it with this judge and I'm not reporting it.
 
@@ -120,7 +126,7 @@ The same dashboard shows how far the Go consumer is behind Kafka, using a `kafka
 
 - **Short ambiguous words break retrieval.** Searching for "Go" matches the word "Go-To-Market" in a pile of sales postings, and the 3B model then happily lists them as Go jobs. Neither the dense model nor BM25 can tell the language from the word. Searching "Golang" works better. I left this alone instead of special-casing one token.
 - **The 3B model has a ceiling.** It sometimes blurs two companies into one sentence, and it pads answers with weak matches when the retrieved chunks are poor.
-- **RAGAS penalizes correct refusals on relevancy.** When the right answer is "there is no COBOL role in the data", answer relevancy scores it low, which drags the all-questions average down (0.668 versus 0.773 on answerable questions only). Faithfulness doesn't have this problem. I report both views, but I haven't yet verified by hand that every refusal answer actually says the role doesn't exist.
+- **RAGAS penalizes correct refusals on relevancy.** When the right answer is "there is no COBOL role in the data", answer relevancy scores it low, which drags the all-questions average down (0.681 versus 0.733 on answerable questions only). Faithfulness doesn't have this problem. I report both views, and I checked the 13 refusal answers by hand: 12 are correct, and one claimed a posting was recent from a location string, which the phrase-based check in `split_scores.py` counts as a refusal.
 - **I tuned on the same 55 questions I score on.** Some of the improvement is probably fitting to that set. A held-out set is on the to-do list.
 - **One Anthropic "evergreen role" chunk shows up for unrelated queries.** It's boilerplate that should be stripped at chunking time, which means re-embedding everything, so it's not done.
 - **Aggregate questions don't work.** "Which companies have the most open roles?" needs a count, and RAG can't count. This should go to SQL against Postgres.
@@ -133,7 +139,7 @@ The same dashboard shows how far the Go consumer is behind Kafka, using a `kafka
 - Try a larger generator (8B local, or Haiku) and compare against the 3B model.
 - A simple web frontend and a demo video.
 
-Relevancy is the number I most want to move. It's 0.668 overall and 0.773 on answerable questions, and my target is 0.80 on the answerable set. I expect the reranker and a better model to matter more than further prompt changes.
+Relevancy is the number I most want to move. It's 0.681 overall and 0.733 on answerable questions, and my target is 0.80 on the answerable set. I expect the reranker and a better model to matter more than further prompt changes.
 
 ## Layout
 
