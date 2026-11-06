@@ -1,8 +1,10 @@
 import math
+import os
 import re
 import time
 from pathlib import Path
 
+import anthropic
 import requests
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
@@ -206,10 +208,22 @@ def retrieve(dense_vec: list[float], sparse_vec: dict, k: int, companies: list[s
     return search(dense_vec, sparse_vec, k, companies[0] if companies else None)
 
 
-def generate(question: str, hits: list[dict]) -> str:
+GENERATOR = os.environ.get("GENERATOR", "ollama").lower()
+CLAUDE_MODEL = os.environ.get("CLAUDE_MODEL", "claude-sonnet-5-5")
+CLAUDE_MAX_CALLS = int(os.environ.get("CLAUDE_MAX_CALLS", "300"))
+CLAUDE_FALLBACK = os.environ.get("CLAUDE_FALLBACK", "0") == "1"
+_claude_client = None
+_claude_calls = 0
+
+
+def build_prompt(question: str, hits: list[dict]) -> str:
     context = "\n\n".join(
         f"[{i}] {h['payload']['text']}" for i, h in enumerate(hits, 1)
     )
+    return f"Context:\n{context}\n\nQuestion: {question}"
+
+
+def generate_ollama(question: str, hits: list[dict]) -> str:
     r = requests.post(
         OLLAMA_URL,
         json={
@@ -218,13 +232,41 @@ def generate(question: str, hits: list[dict]) -> str:
             "keep_alive": "1h",
             "messages": [
                 {"role": "system", "content": SYSTEM},
-                {"role": "user", "content": f"Context:\n{context}\n\nQuestion: {question}"},
+                {"role": "user", "content": build_prompt(question, hits)},
             ],
         },
         timeout=300,
     )
     r.raise_for_status()
     return r.json()["message"]["content"]
+
+
+def generate_claude(question: str, hits: list[dict]) -> str:
+    global _claude_client, _claude_calls
+    if _claude_calls >= CLAUDE_MAX_CALLS:
+        raise RuntimeError(f"Claude call cap reached ({CLAUDE_MAX_CALLS})")
+    if _claude_client is None:
+        _claude_client = anthropic.Anthropic()  # reads ANTHROPIC_API_KEY
+    _claude_calls += 1
+    msg = _claude_client.messages.create(
+        model=CLAUDE_MODEL,
+        max_tokens=600,
+        system=SYSTEM,
+        messages=[{"role": "user", "content": build_prompt(question, hits)}],
+        timeout=60,
+    )
+    return "".join(b.text for b in msg.content if b.type == "text")
+
+
+def generate(question: str, hits: list[dict]) -> str:
+    if GENERATOR == "claude":
+        try:
+            return generate_claude(question, hits)
+        except Exception as e:
+            if not CLAUDE_FALLBACK:
+                raise
+            print(f"Claude failed ({e}); falling back to Ollama")
+    return generate_ollama(question, hits)
 
 
 STATIC_DIR = Path(__file__).parent / "static"
@@ -269,7 +311,7 @@ def query(q: Query):
         answer = generate(q.question, hits)
         timings["generation"] = time.perf_counter() - t
         STAGE_LATENCY.labels("generation").observe(timings["generation"])
-    except requests.RequestException as e:
+    except (requests.RequestException, anthropic.APIError, RuntimeError) as e:
         raise HTTPException(status_code=502, detail=str(e))
     sources = [
         {
@@ -283,4 +325,4 @@ def query(q: Query):
         }
         for i, h in enumerate(hits, 1)
     ]
-    return {"answer": answer, "sources": sources, "timings": timings}
+    return {"answer": answer, "sources": sources, "timings": timings, "generator": GENERATOR}
