@@ -21,7 +21,7 @@ Greenhouse / Lever / Ashby APIs
                       |
               embedding service  -->  Qdrant (50,986 chunks)
                                           |
-                          FastAPI /query (hybrid retrieval)
+                  FastAPI /query and /query/stream (hybrid retrieval)
                                           |
                     Ollama (llama3.2:3b) or Claude
 ```
@@ -63,7 +63,7 @@ curl -s -X POST localhost:8000/query \
   -d '{"question": "Which roles mention Kubernetes?"}'
 ```
 
-You can also open `localhost:8000` in a browser. The page shows the answer next to its source postings, with each citation linked to the passage it came from, and the time spent in each stage.
+You can also open `localhost:8000` in a browser. The sources appear as soon as retrieval finishes, then the answer streams in as it is written, with each citation linked to the passage it came from and the time spent in each stage shown above the result. The page uses `POST /query/stream`, which sends newline-delimited JSON events: the sources first, then the answer text in pieces, then a final event with the timings. `POST /query` returns the same thing as one response.
 
 The first request after starting Ollama is slow because the model has to load. After that it takes roughly 10 to 20 seconds per question with the local model.
 
@@ -146,7 +146,7 @@ Grafana is at `localhost:3000` (admin / admin) and Prometheus at `localhost:9090
 
 ![Grafana dashboard during a load test](docs/grafana-dashboard.png)
 
-`docs/load_test.py` sends 30 questions one at a time after a warm-up request, so model loading doesn't count. On my M1 MacBook I ran it twice against the local model: all 60 requests succeeded, with p50 9.2 s both times, p95 17.3 s and 17.5 s, and a max of 27.8 s and 21.1 s. Nearly all of that is generation with the 3B model; retrieval stays well under a second. I only tested one request at a time because Ollama runs one generation at a time here, so concurrent requests would mostly queue. Going faster means a smaller or quantized model, streaming the answer token by token, or a GPU box, not tuning the pipeline around it.
+`docs/load_test.py` sends 30 questions one at a time after a warm-up request, so model loading doesn't count. On my M1 MacBook I ran it twice against the local model: all 60 requests succeeded, with p50 9.2 s both times, p95 17.3 s and 17.5 s, and a max of 27.8 s and 21.1 s. Nearly all of that is generation with the 3B model; retrieval stays well under a second. I only tested one request at a time because Ollama runs one generation at a time here, so concurrent requests would mostly queue. The web page streams the answer, which shows the first words sooner but doesn't shorten the total time. Going faster means a smaller or quantized model or a GPU box, not tuning the pipeline around it.
 
 ### Consumer lag
 
@@ -175,7 +175,6 @@ The same dashboard shows how far the Go consumer is behind Kafka, using a `kafka
 
 ## What's next
 
-- Stream the answer, so the sources appear immediately and the text types out as it's generated.
 - Soften the prompt for Claude so it only adds the "I only see a sample" caveat on existence questions, then rerun to see whether relevancy recovers.
 - A cross-encoder reranker over the top 20 hybrid results, to cut down on weak chunks in the context.
 - Try an 8B local model, to see how close it gets to Claude.
@@ -190,7 +189,7 @@ Faithfulness is the number I trust most for comparing generators. Relevancy is t
 pollers/      Greenhouse, Lever and Ashby pollers
 consumer/     Go Kafka consumer and chunker
 embedding/    dense + sparse embedding service
-api/          FastAPI service and web page (retrieval, query rewriting, generation)
+api/          FastAPI service and web page (retrieval, query rewriting, streaming, generation)
 debezium/     connector config
 schema/       Postgres schema
 docs/         golden questions, RAGAS scripts, saved results
